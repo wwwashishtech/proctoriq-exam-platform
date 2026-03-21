@@ -192,7 +192,7 @@
             color: white;
         }
 
-        /* Enhanced Input Fields */
+        /* Input Fields */
         .input-group {
             margin-bottom: 1.5rem;
         }
@@ -309,7 +309,13 @@
             margin-bottom: 1.5rem;
         }
 
-        /* Option Styles Enhanced */
+        /* Option Styles Enhanced - ALL TEXT WHITE */
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
         .option {
             background: rgba(15, 18, 24, 0.6);
             border: 2px solid rgba(255, 255, 255, 0.1);
@@ -322,6 +328,11 @@
             gap: 15px;
             position: relative;
             overflow: hidden;
+            color: white !important;
+        }
+
+        .option span {
+            color: white !important;
         }
 
         .option::before {
@@ -360,7 +371,7 @@
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            color: white;
+            color: white !important;
         }
 
         /* Palette Enhanced */
@@ -389,6 +400,7 @@
         .palette-item:hover {
             transform: scale(1.1);
             background: rgba(102, 126, 234, 0.5);
+            color: white;
         }
 
         .palette-item.answered {
@@ -415,6 +427,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            color: white;
         }
 
         .results-table th,
@@ -422,23 +435,27 @@
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
         }
 
         .results-table th {
             background: rgba(102, 126, 234, 0.2);
             font-weight: 600;
+            color: white;
         }
 
         .correct-row {
             background: rgba(16, 185, 129, 0.1);
             border-left: 4px solid var(--success);
             animation: fadeInLeft 0.5s ease;
+            color: white;
         }
 
         .incorrect-row {
             background: rgba(239, 68, 68, 0.1);
             border-left: 4px solid var(--danger);
             animation: fadeInLeft 0.5s ease;
+            color: white;
         }
 
         @keyframes fadeInLeft {
@@ -579,6 +596,16 @@
             border: 1px solid #ef4444;
         }
 
+        /* General text colors */
+        p, span, div, label, h2, h3 {
+            color: white;
+        }
+
+        /* Table text */
+        table, td, th {
+            color: white;
+        }
+
         /* Confetti Canvas */
         #confetti-canvas {
             position: fixed;
@@ -624,7 +651,7 @@
 <div class="container" id="appRoot"></div>
 
 <script>
-    // ==================== ENHANCED STORAGE SYSTEM ====================
+    // ==================== STORAGE KEYS ====================
     const STORAGE_EXAMS = 'proctoriq_exams_db_v3';
     const STORAGE_ATTEMPTS = 'proctoriq_attempts_log_v3';
     const STORAGE_ACTIVE_SESSION = 'proctoriq_active_session_v3';
@@ -919,7 +946,6 @@
                     let secs = testSession.remainingSecs % 60;
                     timerEl.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
                     
-                    // Warning when 5 minutes left
                     if (testSession.remainingSecs === 300) {
                         showNotification("⏰ 5 minutes remaining!", "warning");
                     }
@@ -983,7 +1009,6 @@
         attempts.push(attemptRecord);
         saveAttempts(attempts);
         
-        // Update exam stats
         const exams = getExams();
         if (exams[testSession.examCode]) {
             exams[testSession.examCode].totalAttempts = (exams[testSession.examCode].totalAttempts || 0) + 1;
@@ -995,7 +1020,6 @@
 
         window.lastResult = { score, total, percentage, grade, review, studentName: testSession.studentName, examCode: testSession.examCode, gradeColor };
         
-        // Show confetti for high scores
         if (percentage >= 75) {
             startConfetti();
             showNotification("🎉 Congratulations! Excellent performance!", "success");
@@ -1109,7 +1133,6 @@
     // ==================== RENDER FUNCTIONS ====================
     const root = document.getElementById('appRoot');
     
-    // Create animated background bubbles
     function createAnimatedBackground() {
         const bg = document.getElementById('animatedBg');
         for (let i = 0; i < 50; i++) {
@@ -1267,7 +1290,7 @@
             const isSelected = (currentAnswer === opt);
             const optionDiv = document.createElement('div');
             optionDiv.className = `option ${isSelected ? 'selected' : ''}`;
-            optionDiv.innerHTML = `<span class="option-prefix">${prefix[idx]}</span><span>${opt}</span>`;
+            optionDiv.innerHTML = `<span class="option-prefix">${prefix[idx]}</span><span style="color: white;">${opt}</span>`;
             optionDiv.onclick = () => {
                 testSession.answers[currentQIndex] = opt;
                 persistSession(testSession);
@@ -1330,11 +1353,11 @@
         res.review.forEach((item, idx) => {
             reviewRows += `
                 <tr class="${item.status ? 'correct-row' : 'incorrect-row'}">
-                    <td style="padding: 12px;">${idx + 1}</td>
-                    <td style="padding: 12px;">${item.question}</td>
-                    <td style="padding: 12px;"><span class="badge ${item.status ? 'badge-success' : 'badge-danger'}">${item.userAnswer}</span></td>
-                    <td style="padding: 12px;"><span class="badge badge-success">${item.correct}</span></td>
-                    <td style="padding: 12px;">${item.status ? '<i class="fas fa-check-circle" style="color:#10b981"></i> Correct' : '<i class="fas fa-times-circle" style="color:#ef4444"></i> Incorrect'}</td>
+                    <td style="padding: 12px; color: white;">${idx + 1}</td>
+                    <td style="padding: 12px; color: white;">${item.question}</td>
+                    <td style="padding: 12px;"><span class="badge ${item.status ? 'badge-success' : 'badge-danger'}" style="color: white;">${item.userAnswer}</span></td>
+                    <td style="padding: 12px;"><span class="badge badge-success" style="color: white;">${item.correct}</span></td>
+                    <td style="padding: 12px; color: white;">${item.status ? '<i class="fas fa-check-circle" style="color:#10b981"></i> Correct' : '<i class="fas fa-times-circle" style="color:#ef4444"></i> Incorrect'}</td>
                 </tr>
             `;
         });
@@ -1349,14 +1372,14 @@
                 
                 <div class="score-card">
                     <div class="score-number">${res.score}/${res.total}</div>
-                    <div style="font-size: 1.2rem; margin-top: 0.5rem;">Percentage: ${res.percentage.toFixed(2)}%</div>
+                    <div style="font-size: 1.2rem; margin-top: 0.5rem; color: white;">Percentage: ${res.percentage.toFixed(2)}%</div>
                     <div style="font-size: 1.3rem; font-weight: 700; margin-top: 0.5rem; color: ${res.gradeColor || '#10b981'};">${res.grade}</div>
                 </div>
                 
                 <h3 style="color: white; margin: 1.5rem 0 1rem 0;"><i class="fas fa-list-ul"></i> Detailed Review</h3>
                 <div style="overflow-x: auto; max-height: 500px; overflow-y: auto;">
                     <table class="results-table">
-                        <thead><tr style="background: rgba(102,126,234,0.2);"><th>#</th><th>Question</th><th>Your Answer</th><th>Correct Answer</th><th>Status</th></tr></thead>
+                        <thead><tr style="background: rgba(102,126,234,0.2);"><th style="color: white;">#</th><th style="color: white;">Question</th><th style="color: white;">Your Answer</th><th style="color: white;">Correct Answer</th><th style="color: white;">Status</th></tr></thead>
                         <tbody>${reviewRows}</tbody>
                     </table>
                 </div>
@@ -1415,11 +1438,11 @@
         attempts.slice().reverse().slice(0, 20).forEach(a => {
             attemptsHtml += `
                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                    <td style="padding: 10px;"><strong>${a.studentName}</strong></td>
-                    <td style="padding: 10px;"><span class="badge badge-warning">${a.examCode}</span></td>
-                    <td style="padding: 10px;">${new Date(a.timestamp).toLocaleString()}</td>
-                    <td style="padding: 10px;">${a.score}/${a.total}</td>
-                    <td style="padding: 10px;">${a.percentage.toFixed(1)}%</td>
+                    <td style="padding: 10px; color: white;"><strong>${a.studentName}</strong></td>
+                    <td style="padding: 10px;"><span class="badge badge-warning" style="color: white;">${a.examCode}</span></td>
+                    <td style="padding: 10px; color: white;">${new Date(a.timestamp).toLocaleString()}</td>
+                    <td style="padding: 10px; color: white;">${a.score}/${a.total}</td>
+                    <td style="padding: 10px; color: white;">${a.percentage.toFixed(1)}%</td>
                     <td style="padding: 10px; color: ${a.percentage >= 60 ? '#10b981' : '#ef4444'};">${a.grade.split(' ')[0]}</td>
                 </tr>
             `;
@@ -1451,15 +1474,15 @@
                     <div>
                         <h3 style="color: white;"><i class="fas fa-plus-circle"></i> Create New Exam</h3>
                         <div class="input-group">
-                            <label>Exam Code</label>
+                            <label style="color: #a0aec0;">Exam Code</label>
                             <input type="text" id="newExamCode" class="input-field" placeholder="e.g., FINAL2025">
                         </div>
                         <div class="input-group">
-                            <label>Time Limit (minutes)</label>
+                            <label style="color: #a0aec0;">Time Limit (minutes)</label>
                             <input type="number" id="newExamTimer" class="input-field" value="30">
                         </div>
                         <div class="input-group">
-                            <label>Upload Questions (Excel/CSV)</label>
+                            <label style="color: #a0aec0;">Upload Questions (Excel/CSV)</label>
                             <input type="file" id="examQuestionsFile" class="input-field" accept=".xlsx, .csv, .xls">
                         </div>
                         <button id="createExamBtn" class="btn btn-primary" style="width: 100%;"><i class="fas fa-upload"></i> Create Exam</button>
@@ -1475,8 +1498,8 @@
                 <h3 style="color: white; margin-top: 2rem;"><i class="fas fa-history"></i> Recent Test Attempts (Last 20)</h3>
                 <div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
                     <table style="width: 100%; color: #a0aec0;">
-                        <thead><tr style="background: rgba(102,126,234,0.2);"><th>Student</th><th>Exam</th><th>Date</th><th>Score</th><th>%</th><th>Grade</th></tr></thead>
-                        <tbody>${attemptsHtml || '<tr><td colspan="6" style="text-align: center;">No attempts yet</td></tr>'}</tbody>
+                        <thead><tr style="background: rgba(102,126,234,0.2);"><th style="color: white;">Student</th><th style="color: white;">Exam</th><th style="color: white;">Date</th><th style="color: white;">Score</th><th style="color: white;">%</th><th style="color: white;">Grade</th></tr></thead>
+                        <tbody>${attemptsHtml || '<tr><td colspan="6" style="text-align: center; color: white;">No attempts yet</td></tr>'}</tbody>
                     </table>
                 </div>
                 
