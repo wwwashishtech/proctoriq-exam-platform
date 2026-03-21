@@ -21,7 +21,7 @@
 ### 🚀 Quick Start
 
 #### For Students:
-1. Open the [live demo](https://YOUR_USERNAME.github.io/proctoriq-exam-platform/)
+1. Open the [live demo](https://wwwashishtech.github.io/proctoriq-exam-platform/)
 2. Enter exam code: `PROCTOR2024`
 3. Enter your name
 4. Start the examination
@@ -77,7 +77,3 @@ MIT License - Free for educational and commercial use.
 ### 👨‍💻 Developed by  - Ashish Vishwakarma
 
 Created with ❤️ for secure online assessments
-
----
-
-**Live Demo**: [https://YOUR_USERNAME.github.io/proctoriq-exam-platform/](https://YOUR_USERNAME.github.io/proctoriq-exam-platform/)
