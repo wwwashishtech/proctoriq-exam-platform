@@ -1,4 +1,4 @@
-# ProctorIQ Elite - Enterprise Assessment Suite
+# ProctorIQ - Enterprise Assessment Suite
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-green.svg)](https://YOUR_USERNAME.github.io/proctoriq-exam-platform/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
