@@ -2,16 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>ProctorIQ Elite | Enterprise Assessment Suite v3.0</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>ProctorIQ Elite | Enterprise Assessment Suite v4.0</title>
     <!-- SheetJS for Excel/CSV parsing -->
     <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
-    <!-- Chart.js for analytics -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
         * {
             margin: 0;
@@ -20,38 +18,29 @@
         }
 
         :root {
-            --primary: #667eea;
-            --primary-dark: #5a67d8;
-            --secondary: #764ba2;
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
-            --dark: #0a0c10;
-            --darker: #050608;
-            --light: #f3f4f6;
-            --gray: #6c757d;
+            --dark-bg: #0f0f1a;
+            --card-bg: rgba(25, 28, 38, 0.92);
+            --text-primary: #ffffff;
+            --text-secondary: #cbd5e1;
+            --border: rgba(255, 255, 255, 0.12);
         }
 
         body {
-            font-family: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--dark);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
             min-height: 100vh;
             overflow-x: hidden;
+            color: var(--text-primary);
         }
 
-        /* Dynamic Gradient Background */
-        .bg-gradient {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.3) 0%, rgba(10, 12, 16, 0.98) 100%),
-                        repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 8px);
-            z-index: -2;
-        }
-
-        .animated-bg {
+        /* Animated Background */
+        .bg-animation {
             position: fixed;
             top: 0;
             left: 0;
@@ -61,120 +50,120 @@
             overflow: hidden;
         }
 
-        .animated-bg span {
+        .bg-animation::before {
+            content: '';
             position: absolute;
-            width: 80px;
-            height: 80px;
-            background: rgba(102, 126, 234, 0.1);
-            border-radius: 50%;
-            animation: float 20s infinite linear;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15), transparent 50%);
+            animation: rotate 30s linear infinite;
         }
 
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0.5; }
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle at 80% 30%, rgba(139, 92, 246, 0.1), transparent 60%);
+            animation: rotateReverse 25s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes rotateReverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
         }
 
         .container {
             max-width: 1600px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 16px;
             position: relative;
             z-index: 1;
         }
 
-        /* Glassmorphism Enhanced */
+        /* Glass Card - High Contrast */
         .glass-card {
-            background: rgba(20, 24, 32, 0.85);
-            backdrop-filter: blur(20px);
-            border-radius: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.6);
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
         }
 
         .panel {
-            max-width: 600px;
-            margin: 2rem auto;
-            padding: 2.5rem;
+            max-width: 550px;
+            margin: 1rem auto;
+            padding: 1.8rem;
         }
 
+        /* Typography - High Contrast */
         h1 {
-            font-size: 3rem;
+            font-size: clamp(1.8rem, 6vw, 2.8rem);
             font-weight: 800;
-            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #facc15);
+            background: linear-gradient(135deg, #818cf8, #c084fc, #f472b6);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: -0.5px;
-            animation: gradientShift 3s ease infinite;
-            background-size: 300% 300%;
+            margin-bottom: 0.5rem;
         }
 
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        h2 {
+            font-size: clamp(1.2rem, 4vw, 1.6rem);
+            color: var(--text-primary);
+            font-weight: 600;
         }
 
-        /* Modern Button Styles with Ripple Effect */
+        h3 {
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        p, span, label, .text-muted {
+            color: var(--text-secondary);
+        }
+
+        /* Buttons */
         .btn {
-            padding: 12px 28px;
+            padding: clamp(10px, 3vw, 14px) clamp(20px, 5vw, 28px);
             border-radius: 60px;
             font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+            transition: all 0.2s ease;
             cursor: pointer;
             border: none;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn:active::after {
-            width: 300px;
-            height: 300px;
+            justify-content: center;
+            gap: 8px;
+            min-height: 44px;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
         }
 
         .btn-secondary {
             background: rgba(255, 255, 255, 0.1);
             color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--border);
         }
 
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
         }
 
         .btn-success {
@@ -187,30 +176,24 @@
             color: white;
         }
 
-        .btn-warning {
-            background: linear-gradient(135deg, var(--warning), #d97706);
-            color: white;
-        }
-
         /* Input Fields */
         .input-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         .input-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #a0aec0;
+            color: var(--text-secondary);
             font-weight: 500;
             font-size: 0.85rem;
-            letter-spacing: 0.5px;
         }
 
         .input-field {
             width: 100%;
-            padding: 14px 20px;
-            background: rgba(15, 18, 24, 0.8);
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 18px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border);
             border-radius: 60px;
             color: white;
             font-size: 1rem;
@@ -220,96 +203,83 @@
 
         .input-field:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-            transform: scale(1.02);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
         }
 
-        /* Timer Animation */
+        /* Timer */
         .timer-card {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            padding: 12px 24px;
+            background: linear-gradient(135deg, #1e1b2e, #0a0a14);
+            padding: 10px 20px;
             border-radius: 60px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(250, 204, 21, 0.3);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.4); }
-            50% { box-shadow: 0 0 0 10px rgba(250, 204, 21, 0); }
+            gap: 10px;
+            border: 1px solid rgba(250, 204, 21, 0.4);
         }
 
         .timer-display {
             font-family: 'Courier New', monospace;
-            font-size: 2rem;
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
             font-weight: 800;
             color: #facc15;
-            letter-spacing: 3px;
-            text-shadow: 0 0 10px rgba(250, 204, 21, 0.5);
+            letter-spacing: 2px;
         }
 
-        /* Progress Bar Enhanced */
+        /* Progress */
         .progress-container {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 30px;
-            height: 10px;
+            height: 8px;
             overflow: hidden;
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
         .progress-fill {
-            background: linear-gradient(90deg, var(--primary), var(--secondary), #f093fb);
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             height: 100%;
             width: 0%;
-            transition: width 0.5s ease;
+            transition: width 0.4s ease;
             border-radius: 30px;
-            position: relative;
-            overflow: hidden;
         }
 
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shimmer 2s infinite;
+        /* Responsive Grid */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
         }
 
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+        @media (min-width: 768px) {
+            .grid-layout {
+                grid-template-columns: 1fr 300px;
+                gap: 1.8rem;
+            }
+            .container {
+                padding: 20px;
+            }
+            .panel {
+                padding: 2.5rem;
+                margin: 2rem auto;
+            }
         }
 
-        /* Question Card Enhanced */
+        /* Question Card */
         .question-card {
-            background: rgba(30, 35, 48, 0.6);
-            border-radius: 28px;
-            padding: 2rem;
-            margin: 1.5rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.3s;
-        }
-
-        .question-card:hover {
-            border-color: rgba(102, 126, 234, 0.5);
-            transform: translateX(5px);
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 24px;
+            padding: clamp(1.2rem, 4vw, 1.8rem);
+            border: 1px solid var(--border);
         }
 
         .question-text {
-            font-size: 1.4rem;
+            font-size: clamp(1.1rem, 4vw, 1.3rem);
             font-weight: 600;
             color: white;
             line-height: 1.4;
             margin-bottom: 1.5rem;
         }
 
-        /* Option Styles Enhanced - ALL TEXT WHITE */
+        /* Options - High Contrast */
         .options-grid {
             display: flex;
             flex-direction: column;
@@ -317,296 +287,251 @@
         }
 
         .option {
-            background: rgba(15, 18, 24, 0.6);
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border);
             border-radius: 60px;
-            padding: 14px 20px;
+            padding: 12px 18px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 15px;
-            position: relative;
-            overflow: hidden;
-            color: white !important;
-        }
-
-        .option span {
-            color: white !important;
-        }
-
-        .option::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 0;
-            background: linear-gradient(90deg, rgba(102, 126, 234, 0.2), transparent);
-            transition: width 0.3s;
-        }
-
-        .option:hover::before {
-            width: 100%;
+            gap: 12px;
         }
 
         .option:hover {
-            background: rgba(102, 126, 234, 0.2);
+            background: rgba(99, 102, 241, 0.2);
             border-color: var(--primary);
-            transform: translateX(8px);
+            transform: translateX(4px);
         }
 
         .option.selected {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(139, 92, 246, 0.3));
             border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 0 12px rgba(99, 102, 241, 0.3);
         }
 
         .option-prefix {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            color: white !important;
+            color: white;
+            flex-shrink: 0;
         }
 
-        /* Palette Enhanced */
+        .option span:last-child {
+            color: white;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            word-break: break-word;
+            flex: 1;
+        }
+
+        /* Palette */
         .palette-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(55px, 60px));
-            gap: 12px;
-            margin-top: 20px;
-            max-height: 350px;
+            grid-template-columns: repeat(auto-fill, minmax(45px, 52px));
+            gap: 10px;
+            margin-top: 15px;
+            max-height: 300px;
             overflow-y: auto;
             padding: 5px;
         }
 
         .palette-item {
             background: rgba(255, 255, 255, 0.08);
-            border-radius: 50px;
-            padding: 12px 0;
+            border-radius: 40px;
+            padding: 10px 0;
             text-align: center;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             color: #a0aec0;
-            position: relative;
-        }
-
-        .palette-item:hover {
-            transform: scale(1.1);
-            background: rgba(102, 126, 234, 0.5);
-            color: white;
+            font-size: 0.9rem;
         }
 
         .palette-item.answered {
             background: linear-gradient(135deg, var(--success), #059669);
             color: white;
-            box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
         }
 
         .palette-item.current {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(102, 126, 234, 0.8);
-            animation: bounce 0.5s ease;
+            transform: scale(1.05);
+            box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: scale(1.1); }
-            50% { transform: scale(1.2); }
+        /* Results Table */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 1rem 0;
         }
 
-        /* Results Table Enhanced */
         .results-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-            color: white;
         }
 
         .results-table th,
         .results-table td {
             padding: 12px;
             text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
         }
 
         .results-table th {
-            background: rgba(102, 126, 234, 0.2);
-            font-weight: 600;
+            background: rgba(99, 102, 241, 0.15);
             color: white;
+            font-weight: 600;
         }
 
         .correct-row {
             background: rgba(16, 185, 129, 0.1);
-            border-left: 4px solid var(--success);
-            animation: fadeInLeft 0.5s ease;
-            color: white;
+            border-left: 3px solid var(--success);
         }
 
         .incorrect-row {
             background: rgba(239, 68, 68, 0.1);
-            border-left: 4px solid var(--danger);
-            animation: fadeInLeft 0.5s ease;
+            border-left: 3px solid var(--danger);
+        }
+
+        .correct-row td, .incorrect-row td {
             color: white;
         }
 
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
+        /* Score Card */
         .score-card {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            border-radius: 28px;
-            padding: 2rem;
+            background: linear-gradient(135deg, #1e1b2e, #0a0a14);
+            border-radius: 24px;
+            padding: 1.8rem;
             text-align: center;
             margin: 1.5rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .score-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(102,126,234,0.1), transparent);
-            animation: rotate 10s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
         }
 
         .score-number {
-            font-size: 5rem;
+            font-size: clamp(3rem, 10vw, 4.5rem);
             font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--secondary), #f093fb);
+            background: linear-gradient(135deg, #818cf8, #c084fc);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            position: relative;
-            z-index: 1;
         }
 
-        /* Loading Spinner */
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(102, 126, 234, 0.3);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Tooltip */
-        .tooltip {
-            position: relative;
-            display: inline-block;
-        }
-
-        .tooltip .tooltip-text {
-            visibility: hidden;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            text-align: center;
-            padding: 5px 10px;
-            border-radius: 6px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap;
-            font-size: 0.75rem;
-        }
-
-        .tooltip:hover .tooltip-text {
-            visibility: visible;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 12px;
-            }
-            .question-text {
-                font-size: 1.1rem;
-            }
-            .timer-display {
-                font-size: 1.3rem;
-            }
-            .grid-layout {
-                grid-template-columns: 1fr !important;
-            }
-        }
-
-        .grid-layout {
-            display: grid;
-            grid-template-columns: 1fr 320px;
-            gap: 2rem;
-        }
-
-        /* Badge Enhanced */
+        /* Badge */
         .badge {
             display: inline-block;
             padding: 4px 12px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
         }
 
         .badge-warning {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.2));
-            color: #f59e0b;
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
             border: 1px solid #f59e0b;
         }
 
         .badge-success {
             background: rgba(16, 185, 129, 0.2);
-            color: #10b981;
+            color: #34d399;
             border: 1px solid #10b981;
         }
 
-        .badge-danger {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-            border: 1px solid #ef4444;
+        /* Admin Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
         }
 
-        /* General text colors */
-        p, span, div, label, h2, h3 {
+        .stat-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.1));
+            border-radius: 20px;
+            padding: 1.2rem;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (min-width: 768px) {
+            .admin-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            left: 16px;
+            background: #1e1b2e;
             color: white;
+            padding: 14px 20px;
+            border-radius: 60px;
+            z-index: 10000;
+            font-weight: 500;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
         }
 
-        /* Table text */
-        table, td, th {
-            color: white;
+        @media (min-width: 768px) {
+            .notification {
+                top: 20px;
+                right: 20px;
+                left: auto;
+                max-width: 400px;
+            }
         }
 
-        /* Confetti Canvas */
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-buttons .btn {
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .footer-icons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
         #confetti-canvas {
             position: fixed;
             top: 0;
@@ -617,63 +542,47 @@
             z-index: 10000;
         }
 
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
 
-        .modal-content {
-            background: rgba(20, 24, 32, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 32px;
-            padding: 2rem;
-            max-width: 500px;
-            width: 90%;
-            border: 1px solid rgba(255,255,255,0.2);
-            animation: fadeInUp 0.3s ease;
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
-<div class="animated-bg" id="animatedBg"></div>
-<div class="bg-gradient"></div>
+<div class="bg-animation"></div>
 <canvas id="confetti-canvas"></canvas>
 <div class="container" id="appRoot"></div>
 
 <script>
     // ==================== STORAGE KEYS ====================
-    const STORAGE_EXAMS = 'proctoriq_exams_db_v3';
-    const STORAGE_ATTEMPTS = 'proctoriq_attempts_log_v3';
-    const STORAGE_ACTIVE_SESSION = 'proctoriq_active_session_v3';
-    const STORAGE_CURRENT_EXAM = 'proctoriq_current_exam_v3';
-    const STORAGE_SETTINGS = 'proctoriq_settings_v3';
-    const STORAGE_ANALYTICS = 'proctoriq_analytics_v3';
+    const STORAGE_EXAMS = 'proctoriq_exams_v4';
+    const STORAGE_ATTEMPTS = 'proctoriq_attempts_v4';
+    const STORAGE_ACTIVE_SESSION = 'proctoriq_session_v4';
+    const STORAGE_CURRENT_EXAM = 'proctoriq_current_exam_v4';
 
-    // ==================== ENHANCED DEFAULT QUESTIONS ====================
+    // ==================== DEFAULT QUESTIONS ====================
     const DEFAULT_QUESTIONS = [
-        { sr_no: 1, question: "What is the capital of France?", option_a: "Berlin", option_b: "Madrid", option_c: "Paris", option_d: "Lisbon", correct_answer: "Paris", difficulty: "Easy", category: "Geography" },
-        { sr_no: 2, question: "Which planet is known as the Red Planet?", option_a: "Earth", option_b: "Mars", option_c: "Jupiter", option_d: "Venus", correct_answer: "Mars", difficulty: "Easy", category: "Astronomy" },
-        { sr_no: 3, question: "Who painted the Mona Lisa?", option_a: "Van Gogh", option_b: "Picasso", option_c: "Da Vinci", option_d: "Rembrandt", correct_answer: "Da Vinci", difficulty: "Medium", category: "Art" },
-        { sr_no: 4, question: "What is 5 × 8?", option_a: "35", option_b: "40", option_c: "45", option_d: "30", correct_answer: "40", difficulty: "Easy", category: "Mathematics" },
-        { sr_no: 5, question: "Which HTML tag is used for an unordered list?", option_a: "<ol>", option_b: "<li>", option_c: "<ul>", option_d: "<list>", correct_answer: "<ul>", difficulty: "Medium", category: "Programming" },
-        { sr_no: 6, question: "What does CSS stand for?", option_a: "Creative Style Sheets", option_b: "Cascading Style Sheets", option_c: "Computer Style Sheets", option_d: "Colorful Style Sheets", correct_answer: "Cascading Style Sheets", difficulty: "Easy", category: "Programming" },
-        { sr_no: 7, question: "Who wrote 'Hamlet'?", option_a: "Charles Dickens", option_b: "Mark Twain", option_c: "William Shakespeare", option_d: "Jane Austen", correct_answer: "William Shakespeare", difficulty: "Easy", category: "Literature" },
-        { sr_no: 8, question: "What is the largest ocean on Earth?", option_a: "Atlantic Ocean", option_b: "Indian Ocean", option_c: "Arctic Ocean", option_d: "Pacific Ocean", correct_answer: "Pacific Ocean", difficulty: "Easy", category: "Geography" },
-        { sr_no: 9, question: "Which year did World War II end?", option_a: "1943", option_b: "1944", option_c: "1945", option_d: "1946", correct_answer: "1945", difficulty: "Medium", category: "History" },
-        { sr_no: 10, question: "What is the square root of 64?", option_a: "6", option_b: "7", option_c: "8", option_d: "9", correct_answer: "8", difficulty: "Easy", category: "Mathematics" }
+        { sr_no: 1, question: "What is the capital of France?", option_a: "Berlin", option_b: "Madrid", option_c: "Paris", option_d: "Lisbon", correct_answer: "Paris", category: "Geography" },
+        { sr_no: 2, question: "Which planet is known as the Red Planet?", option_a: "Earth", option_b: "Mars", option_c: "Jupiter", option_d: "Venus", correct_answer: "Mars", category: "Astronomy" },
+        { sr_no: 3, question: "Who painted the Mona Lisa?", option_a: "Van Gogh", option_b: "Picasso", option_c: "Da Vinci", option_d: "Rembrandt", correct_answer: "Da Vinci", category: "Art" },
+        { sr_no: 4, question: "What is 5 × 8?", option_a: "35", option_b: "40", option_c: "45", option_d: "30", correct_answer: "40", category: "Math" },
+        { sr_no: 5, question: "Which HTML tag is used for an unordered list?", option_a: "<ol>", option_b: "<li>", option_c: "<ul>", option_d: "<list>", correct_answer: "<ul>", category: "Programming" },
+        { sr_no: 6, question: "What does CSS stand for?", option_a: "Creative Style Sheets", option_b: "Cascading Style Sheets", option_c: "Computer Style Sheets", option_d: "Colorful Style Sheets", correct_answer: "Cascading Style Sheets", category: "Programming" },
+        { sr_no: 7, question: "Who wrote 'Hamlet'?", option_a: "Charles Dickens", option_b: "Mark Twain", option_c: "William Shakespeare", option_d: "Jane Austen", correct_answer: "William Shakespeare", category: "Literature" },
+        { sr_no: 8, question: "What is the largest ocean on Earth?", option_a: "Atlantic Ocean", option_b: "Indian Ocean", option_c: "Arctic Ocean", option_d: "Pacific Ocean", correct_answer: "Pacific Ocean", category: "Geography" },
+        { sr_no: 9, question: "Which year did World War II end?", option_a: "1943", option_b: "1944", option_c: "1945", option_d: "1946", correct_answer: "1945", category: "History" },
+        { sr_no: 10, question: "What is the square root of 64?", option_a: "6", option_b: "7", option_c: "8", option_d: "9", correct_answer: "8", category: "Math" }
     ];
 
-    // ==================== ENHANCED INITIALIZATION ====================
     function initDefaultExam() {
         let exams = getExams();
         if (!exams['PROCTOR2024']) {
@@ -681,25 +590,10 @@
                 questions: [...DEFAULT_QUESTIONS],
                 timerMinutes: 30,
                 createdAt: new Date().toISOString(),
-                createdBy: "System",
-                category: "General",
                 totalAttempts: 0,
                 averageScore: 0
             };
             saveExams(exams);
-        }
-        
-        let settings = getSettings();
-        if (!settings) {
-            settings = {
-                allowResume: true,
-                showCorrectAnswers: true,
-                enableAnalytics: true,
-                theme: "dark",
-                autoSaveInterval: 30,
-                proctorEnabled: true
-            };
-            saveSettings(settings);
         }
     }
 
@@ -719,41 +613,8 @@
 
     function saveAttempts(attempts) {
         localStorage.setItem(STORAGE_ATTEMPTS, JSON.stringify(attempts));
-        updateAnalytics(attempts);
     }
 
-    function getSettings() {
-        const s = localStorage.getItem(STORAGE_SETTINGS);
-        return s ? JSON.parse(s) : null;
-    }
-
-    function saveSettings(settings) {
-        localStorage.setItem(STORAGE_SETTINGS, JSON.stringify(settings));
-    }
-
-    function getAnalytics() {
-        const a = localStorage.getItem(STORAGE_ANALYTICS);
-        return a ? JSON.parse(a) : { totalTests: 0, averageScore: 0, passRate: 0, categoryBreakdown: {} };
-    }
-
-    function updateAnalytics(attempts) {
-        if (attempts.length === 0) return;
-        const totalTests = attempts.length;
-        const totalScore = attempts.reduce((sum, a) => sum + a.percentage, 0);
-        const averageScore = totalScore / totalTests;
-        const passedTests = attempts.filter(a => a.percentage >= 60).length;
-        const passRate = (passedTests / totalTests) * 100;
-        
-        const analytics = {
-            totalTests,
-            averageScore,
-            passRate,
-            lastUpdated: new Date().toISOString()
-        };
-        localStorage.setItem(STORAGE_ANALYTICS, JSON.stringify(analytics));
-    }
-
-    // ==================== HELPER FUNCTIONS ====================
     function shuffleArray(arr) {
         for (let i = arr.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -768,116 +629,30 @@
         for (let i = 0; i < shuffledFull.length; i++) {
             const q = shuffledFull[i];
             const opts = [q.option_a, q.option_b, q.option_c, q.option_d];
-            const shuffledOpts = shuffleArray([...opts]);
-            optionsMapping[i] = shuffledOpts;
+            optionsMapping[i] = shuffleArray([...opts]);
         }
         return { shuffledQuestions: shuffledFull, optionsMapping };
     }
 
-    // ==================== ENHANCED ANTI-CHEAT ====================
+    // Anti-cheat
     function enforceAntiCheat() {
-        document.addEventListener('contextmenu', (e) => { e.preventDefault(); return false; });
-        document.addEventListener('copy', (e) => { e.preventDefault(); return false; });
-        document.addEventListener('cut', (e) => { e.preventDefault(); return false; });
-        document.addEventListener('paste', (e) => { e.preventDefault(); return false; });
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+        document.addEventListener('copy', (e) => e.preventDefault());
+        document.addEventListener('cut', (e) => e.preventDefault());
+        document.addEventListener('paste', (e) => e.preventDefault());
         document.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey && (e.key === 'c' || e.key === 'v' || e.key === 'x' || e.key === 'u')) || 
-                (e.key === 'F12') || 
-                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-                (e.ctrlKey && e.key === 'r')) {
+            if ((e.ctrlKey && (e.key === 'c' || e.key === 'v' || e.key === 'x')) || e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
                 e.preventDefault();
-                showNotification("⚠️ Action blocked: Cheating attempt detected!", "warning");
             }
         });
     }
 
-    // ==================== CONFETTI EFFECT ====================
-    function startConfetti() {
-        const canvas = document.getElementById('confetti-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        const particles = [];
-        for (let i = 0; i < 150; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height - canvas.height,
-                size: Math.random() * 8 + 4,
-                speedY: Math.random() * 5 + 3,
-                speedX: (Math.random() - 0.5) * 3,
-                color: `hsl(${Math.random() * 360}, 70%, 60%)`,
-                rotation: Math.random() * 360
-            });
-        }
-        
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            let active = false;
-            for (let p of particles) {
-                p.y += p.speedY;
-                p.x += p.speedX;
-                p.rotation += 5;
-                if (p.y < canvas.height + 100) active = true;
-                if (p.y > canvas.height) p.y = -50;
-                if (p.x > canvas.width) p.x = 0;
-                if (p.x < 0) p.x = canvas.width;
-                
-                ctx.save();
-                ctx.translate(p.x, p.y);
-                ctx.rotate(p.rotation * Math.PI / 180);
-                ctx.fillStyle = p.color;
-                ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
-                ctx.restore();
-            }
-            if (active) requestAnimationFrame(animate);
-        }
-        animate();
-        setTimeout(() => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }, 5000);
-    }
-
-    // ==================== NOTIFICATION SYSTEM ====================
-    function showNotification(msg, type = "info") {
-        const notification = document.createElement('div');
-        const colors = {
-            success: '#10b981',
-            warning: '#f59e0b',
-            error: '#ef4444',
-            info: '#667eea'
-        };
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: ${colors[type] || colors.info};
-            color: white;
-            padding: 14px 28px;
-            border-radius: 60px;
-            z-index: 10000;
-            animation: slideInRight 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
-            font-weight: 600;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            backdrop-filter: blur(10px);
-        `;
-        const icon = type === 'success' ? '✅' : type === 'warning' ? '⚠️' : type === 'error' ? '❌' : 'ℹ️';
-        notification.innerHTML = `${icon} ${msg}`;
-        document.body.appendChild(notification);
-        setTimeout(() => notification.remove(), 3000);
-    }
-
-    // ==================== GLOBAL STATE ====================
     let currentView = 'landing';
     let currentStudentName = null;
     let currentExamCode = null;
     let testSession = null;
     let currentQIndex = 0;
     let intervalTimer = null;
-    let warningCount = 0;
 
     function persistSession(sessionData) {
         localStorage.setItem(STORAGE_ACTIVE_SESSION, JSON.stringify(sessionData));
@@ -889,14 +664,20 @@
         localStorage.removeItem(STORAGE_CURRENT_EXAM);
     }
 
-    // ==================== TEST FUNCTIONS ====================
+    function showNotification(msg, type = "info") {
+        const colors = { success: '#10b981', warning: '#f59e0b', error: '#ef4444', info: '#6366f1' };
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.style.background = colors[type] || colors.info;
+        notification.innerHTML = `${type === 'success' ? '✅' : type === 'warning' ? '⚠️' : type === 'error' ? '❌' : 'ℹ️'} ${msg}`;
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 3000);
+    }
+
     function startTest(examCode, studentName, resume = false, savedData = null) {
         const exams = getExams();
         const exam = exams[examCode];
-        if (!exam) {
-            showNotification("❌ Exam code not found!", "error");
-            return false;
-        }
+        if (!exam) { showNotification("Exam code not found!", "error"); return false; }
 
         currentExamCode = examCode;
         currentStudentName = studentName;
@@ -907,17 +688,10 @@
             startTimerFromRemaining(testSession.remainingSecs);
         } else {
             const { shuffledQuestions, optionsMapping } = buildShuffledTest(exam.questions);
-            const timerMin = exam.timerMinutes;
             const newSession = {
-                studentName: studentName,
-                examCode: examCode,
-                startTime: Date.now(),
-                questions: shuffledQuestions,
-                optionsMapping: optionsMapping,
-                answers: {},
-                remainingSecs: timerMin * 60,
-                currentIndex: 0,
-                bookmark: null
+                studentName, examCode, startTime: Date.now(),
+                questions: shuffledQuestions, optionsMapping, answers: {},
+                remainingSecs: exam.timerMinutes * 60, currentIndex: 0
             };
             testSession = newSession;
             currentQIndex = 0;
@@ -945,11 +719,8 @@
                     let mins = Math.floor(testSession.remainingSecs / 60);
                     let secs = testSession.remainingSecs % 60;
                     timerEl.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-                    
-                    if (testSession.remainingSecs === 300) {
-                        showNotification("⏰ 5 minutes remaining!", "warning");
-                    }
                 }
+                if (testSession.remainingSecs === 300) showNotification("5 minutes remaining!", "warning");
                 if (testSession.remainingSecs === 0) autoSubmitTest();
             }
         }, 1000);
@@ -958,41 +729,38 @@
     function autoSubmitTest() {
         if (intervalTimer) clearInterval(intervalTimer);
         if (currentView === 'test' && testSession) {
-            showNotification("⏰ Time's up! Submitting your test...", "warning");
+            showNotification("Time's up! Submitting...", "warning");
             submitTestAndSave();
         }
     }
 
     function submitTestAndSave() {
-        if (!testSession) return;
+        if (!testSession) {
+            console.error("No test session found");
+            return;
+        }
+        
         const questionsList = testSession.questions;
         const answers = testSession.answers;
         let score = 0;
         const review = [];
+        
         for (let i = 0; i < questionsList.length; i++) {
             const q = questionsList[i];
             const userAns = answers[i] || null;
-            const correctAns = q.correct_answer;
-            const isCorrect = (userAns === correctAns);
+            const isCorrect = (userAns === q.correct_answer);
             if (isCorrect) score++;
             review.push({
                 question: q.question,
-                correct: correctAns,
+                correct: q.correct_answer,
                 userAnswer: userAns || "Not Answered",
-                status: isCorrect,
-                category: q.category || "General",
-                difficulty: q.difficulty || "Medium"
+                status: isCorrect
             });
         }
+        
         const total = questionsList.length;
         const percentage = (score / total) * 100;
-        let grade = '';
-        let gradeColor = '';
-        if (percentage >= 90) { grade = 'A+ (Outstanding)'; gradeColor = '#10b981'; }
-        else if (percentage >= 75) { grade = 'A (Excellent)'; gradeColor = '#10b981'; }
-        else if (percentage >= 60) { grade = 'B (Good)'; gradeColor = '#f59e0b'; }
-        else if (percentage >= 45) { grade = 'C (Average)'; gradeColor = '#f59e0b'; }
-        else { grade = 'F (Needs Improvement)'; gradeColor = '#ef4444'; }
+        let grade = percentage >= 90 ? 'A+ (Outstanding)' : percentage >= 75 ? 'A (Excellent)' : percentage >= 60 ? 'B (Good)' : percentage >= 45 ? 'C (Average)' : 'F (Needs Improvement)';
 
         const attemptRecord = {
             studentName: testSession.studentName,
@@ -1002,27 +770,29 @@
             total: total,
             percentage: percentage,
             grade: grade,
-            reviewDetails: review,
-            timeSpent: (testSession.timerMinutes * 60 - testSession.remainingSecs) || 0
+            reviewDetails: review
         };
+        
         const attempts = getAttempts();
         attempts.push(attemptRecord);
         saveAttempts(attempts);
         
+        // Update exam stats
         const exams = getExams();
         if (exams[testSession.examCode]) {
-            exams[testSession.examCode].totalAttempts = (exams[testSession.examCode].totalAttempts || 0) + 1;
             const examAttempts = attempts.filter(a => a.examCode === testSession.examCode);
             const avgScore = examAttempts.reduce((sum, a) => sum + a.percentage, 0) / examAttempts.length;
             exams[testSession.examCode].averageScore = avgScore;
+            exams[testSession.examCode].totalAttempts = (exams[testSession.examCode].totalAttempts || 0) + 1;
             saveExams(exams);
         }
 
-        window.lastResult = { score, total, percentage, grade, review, studentName: testSession.studentName, examCode: testSession.examCode, gradeColor };
+        window.lastResult = { score, total, percentage, grade, review, studentName: testSession.studentName, examCode: testSession.examCode };
         
+        // Confetti for good scores
         if (percentage >= 75) {
             startConfetti();
-            showNotification("🎉 Congratulations! Excellent performance!", "success");
+            showNotification("Excellent performance! 🎉", "success");
         }
         
         clearPersistedSession();
@@ -1032,10 +802,50 @@
         renderApp();
     }
 
-    // ==================== ADMIN FUNCTIONS ====================
+    function startConfetti() {
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const particles = [];
+        for (let i = 0; i < 120; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                size: Math.random() * 7 + 3,
+                speedY: Math.random() * 5 + 2,
+                speedX: (Math.random() - 0.5) * 2.5,
+                color: `hsl(${Math.random() * 360}, 80%, 60%)`,
+                rotation: Math.random() * 360
+            });
+        }
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let active = false;
+            for (let p of particles) {
+                p.y += p.speedY;
+                p.x += p.speedX;
+                p.rotation += 8;
+                if (p.y < canvas.height + 100) active = true;
+                if (p.y > canvas.height) p.y = -50;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.x < 0) p.x = canvas.width;
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rotation * Math.PI / 180);
+                ctx.fillStyle = p.color;
+                ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+                ctx.restore();
+            }
+            if (active) requestAnimationFrame(animate);
+        }
+        animate();
+        setTimeout(() => ctx.clearRect(0, 0, canvas.width, canvas.height), 4500);
+    }
+
     function uploadExcelToExam(file, examCode, timerValue, callback) {
         const reader = new FileReader();
-        reader.onload = function (e) {
+        reader.onload = function(e) {
             const data = new Uint8Array(e.target.result);
             const workbook = XLSX.read(data, { type: 'array' });
             const sheet = workbook.Sheets[workbook.SheetNames[0]];
@@ -1051,8 +861,7 @@
                         option_c: row.option_c,
                         option_d: row.option_d,
                         correct_answer: row.correct_answer,
-                        category: row.category || "General",
-                        difficulty: row.difficulty || "Medium"
+                        category: row.category || "General"
                     });
                 }
             }
@@ -1062,15 +871,14 @@
                     questions: newQuestions,
                     timerMinutes: timerValue,
                     createdAt: new Date().toISOString(),
-                    createdBy: "Admin",
                     totalAttempts: 0,
                     averageScore: 0
                 };
                 saveExams(exams);
-                showNotification(`✅ Exam "${examCode}" created with ${newQuestions.length} questions!`, "success");
+                showNotification(`Exam "${examCode}" created with ${newQuestions.length} questions!`, "success");
                 callback(true);
             } else {
-                showNotification("Invalid format. Please use the template.", "error");
+                showNotification("Invalid format. Use template.", "error");
                 callback(false);
             }
         };
@@ -1078,9 +886,9 @@
     }
 
     function downloadTemplate() {
-        const wsData = [['sr_no', 'question', 'option_a', 'option_b', 'option_c', 'option_d', 'correct_answer', 'category', 'difficulty']];
+        const wsData = [['sr_no', 'question', 'option_a', 'option_b', 'option_c', 'option_d', 'correct_answer', 'category']];
         DEFAULT_QUESTIONS.forEach(q => {
-            wsData.push([q.sr_no, q.question, q.option_a, q.option_b, q.option_c, q.option_d, q.correct_answer, q.category, q.difficulty]);
+            wsData.push([q.sr_no, q.question, q.option_a, q.option_b, q.option_c, q.option_d, q.correct_answer, q.category]);
         });
         const ws = XLSX.utils.aoa_to_sheet(wsData);
         const wb = XLSX.utils.book_new();
@@ -1090,10 +898,10 @@
     }
 
     function resetAllData() {
-        if (confirm("⚠️ DANGER: This will delete ALL exams, attempts, and sessions. This action cannot be undone!")) {
+        if (confirm("⚠️ This will delete ALL exams and attempts!")) {
             localStorage.clear();
             initDefaultExam();
-            showNotification("All data has been reset to default!", "success");
+            showNotification("All data reset to default!", "success");
             currentView = 'landing';
             renderApp();
         }
@@ -1101,14 +909,14 @@
 
     function deleteExam(examCode) {
         if (examCode === 'PROCTOR2024') {
-            showNotification("Cannot delete the default exam!", "warning");
+            showNotification("Cannot delete default exam!", "warning");
             return;
         }
-        if (confirm(`Delete exam "${examCode}" and all its data?`)) {
+        if (confirm(`Delete exam "${examCode}"?`)) {
             const exams = getExams();
             delete exams[examCode];
             saveExams(exams);
-            showNotification(`Exam "${examCode}" deleted successfully!`, "success");
+            showNotification(`Exam "${examCode}" deleted!`, "success");
             renderAdmin();
         }
     }
@@ -1127,24 +935,10 @@
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Results');
         XLSX.writeFile(wb, `proctoriq_results_${new Date().toISOString().slice(0,10)}.xlsx`);
-        showNotification("Results exported successfully!", "success");
+        showNotification("Results exported!", "success");
     }
 
-    // ==================== RENDER FUNCTIONS ====================
     const root = document.getElementById('appRoot');
-    
-    function createAnimatedBackground() {
-        const bg = document.getElementById('animatedBg');
-        for (let i = 0; i < 50; i++) {
-            const span = document.createElement('span');
-            span.style.left = Math.random() * 100 + '%';
-            span.style.width = span.style.height = Math.random() * 60 + 20 + 'px';
-            span.style.animationDelay = Math.random() * 20 + 's';
-            span.style.animationDuration = Math.random() * 15 + 10 + 's';
-            bg.appendChild(span);
-        }
-    }
-    createAnimatedBackground();
 
     function renderApp() {
         enforceAntiCheat();
@@ -1156,39 +950,30 @@
 
     function renderLanding() {
         root.innerHTML = `
-            <div class="glass-card panel animate__animated animate__fadeInUp">
-                <div style="text-align: center;">
-                    <i class="fas fa-shield-alt" style="font-size: 5rem; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; background-clip: text; color: transparent;"></i>
+            <div class="glass-card panel">
+                <div style="text-align:center;">
+                    <i class="fas fa-shield-alt" style="font-size: clamp(3rem, 8vw, 4rem); color: #818cf8;"></i>
                     <h1>ProctorIQ Elite</h1>
-                    <p style="color: #a0aec0; margin-top: 0.5rem;">Enterprise Assessment Suite v3.0</p>
+                    <p style="color: #94a3b8;">Enterprise Assessment Suite v4.0</p>
                 </div>
-                
-                <div style="margin: 2rem 0;">
+                <div style="margin: 1.8rem 0;">
                     <div class="input-group">
                         <label><i class="fas fa-qrcode"></i> Exam Code</label>
-                        <input type="text" id="examCodeInput" class="input-field" placeholder="Enter exam code (e.g., PROCTOR2024)" style="font-family: monospace;">
+                        <input type="text" id="examCodeInput" class="input-field" placeholder="PROCTOR2024" value="PROCTOR2024">
                     </div>
                     <div class="input-group">
                         <label><i class="fas fa-user"></i> Full Name</label>
                         <input type="text" id="studentNameInput" class="input-field" placeholder="Enter your full name">
                     </div>
-                    <button id="startExamBtn" class="btn btn-primary" style="width: 100%; justify-content: center;">
-                        <i class="fas fa-play"></i> Start Examination
-                    </button>
+                    <button id="startExamBtn" class="btn btn-primary" style="width:100%;"><i class="fas fa-play"></i> Start Examination</button>
                 </div>
-                
-                <div style="text-align: center; margin-top: 2rem;">
-                    <button id="adminBtn" class="btn btn-secondary">
-                        <i class="fas fa-lock"></i> Admin Portal
-                    </button>
+                <div style="text-align:center;">
+                    <button id="adminBtn" class="btn btn-secondary"><i class="fas fa-lock"></i> Admin Portal</button>
                 </div>
-                
-                <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1);">
-                    <div style="display: flex; gap: 12px; justify-content: center; font-size: 0.8rem; color: #6c757d;">
-                        <span class="tooltip"><i class="fas fa-shield-alt"></i> Anti-Cheat <span class="tooltip-text">Prevents copy-paste, right-click, tab switching</span></span>
-                        <span class="tooltip"><i class="fas fa-save"></i> Auto-Save <span class="tooltip-text">Resume any time</span></span>
-                        <span class="tooltip"><i class="fas fa-chart-line"></i> Analytics <span class="tooltip-text">Real-time performance tracking</span></span>
-                    </div>
+                <div class="footer-icons" style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+                    <span><i class="fas fa-shield-alt"></i> Anti-Cheat</span>
+                    <span><i class="fas fa-save"></i> Auto-Save</span>
+                    <span><i class="fas fa-chart-line"></i> Analytics</span>
                 </div>
             </div>
         `;
@@ -1196,25 +981,16 @@
         document.getElementById('startExamBtn').onclick = () => {
             const examCode = document.getElementById('examCodeInput').value.trim().toUpperCase();
             const studentName = document.getElementById('studentNameInput').value.trim();
-            if (!examCode) { showNotification("Please enter exam code!", "warning"); return; }
-            if (!studentName) { showNotification("Please enter your name!", "warning"); return; }
+            if (!examCode) { showNotification("Enter exam code!", "warning"); return; }
+            if (!studentName) { showNotification("Enter your name!", "warning"); return; }
             const exams = getExams();
             if (!exams[examCode]) { showNotification(`Exam "${examCode}" not found!`, "error"); return; }
-            
             const savedSession = localStorage.getItem(STORAGE_ACTIVE_SESSION);
-            const savedExam = localStorage.getItem(STORAGE_CURRENT_EXAM);
-            if (savedSession && savedExam === examCode) {
-                const sess = JSON.parse(savedSession);
-                if (sess.studentName === studentName) {
-                    if (confirm("You have an unfinished test. Resume where you left off?")) {
-                        startTest(examCode, studentName, true, sess);
-                        return;
-                    } else {
-                        clearPersistedSession();
-                    }
-                }
+            if (savedSession && JSON.parse(savedSession).examCode === examCode && confirm("Resume unfinished test?")) {
+                startTest(examCode, studentName, true, JSON.parse(savedSession));
+            } else {
+                startTest(examCode, studentName);
             }
-            startTest(examCode, studentName);
         };
         
         document.getElementById('adminBtn').onclick = () => {
@@ -1223,7 +999,7 @@
                 currentView = 'admin';
                 renderApp();
             } else {
-                showNotification("Wrong admin password!", "error");
+                showNotification("Wrong password!", "error");
             }
         };
     }
@@ -1239,46 +1015,43 @@
         const progressPercent = (answeredCount / qList.length) * 100;
         
         root.innerHTML = `
-            <div class="glass-card animate__animated animate__fadeIn" style="padding: 2rem;">
-                <div class="test-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; margin-bottom: 30px;">
+            <div class="glass-card" style="padding: clamp(1rem, 4vw, 1.8rem);">
+                <div class="test-header">
                     <div>
-                        <h2 style="color: white;"><i class="fas fa-graduation-cap"></i> ${testSession.examCode}</h2>
-                        <p style="color: #a0aec0; margin-top: 5px;"><i class="fas fa-user"></i> ${testSession.studentName}</p>
+                        <h2 style="color:white;"><i class="fas fa-graduation-cap"></i> ${testSession.examCode}</h2>
+                        <p style="color:#94a3b8;"><i class="fas fa-user"></i> ${testSession.studentName}</p>
                     </div>
                     <div class="timer-card">
-                        <i class="fas fa-hourglass-half timer-icon"></i>
+                        <i class="fas fa-hourglass-half" style="color:#facc15;"></i>
                         <span class="timer-display" id="timerDisplay">--:--</span>
                     </div>
                 </div>
-                
                 <div class="progress-container">
                     <div class="progress-fill" style="width: ${progressPercent}%"></div>
                 </div>
-                <p style="color: #a0aec0; text-align: right; font-size: 0.85rem;">${answeredCount}/${qList.length} Questions Answered</p>
-                
+                <p style="color:#94a3b8; text-align:right; margin-bottom: 1rem;">${answeredCount}/${qList.length} Answered</p>
                 <div class="grid-layout">
                     <div>
                         <div class="question-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                <span class="badge badge-warning"><i class="fas fa-question-circle"></i> Question ${currentQIndex + 1} of ${qList.length}</span>
-                                ${currQ.category ? `<span class="badge badge-success"><i class="fas fa-tag"></i> ${currQ.category}</span>` : ''}
+                            <div style="display:flex; justify-content:space-between; margin-bottom: 1rem; flex-wrap:wrap; gap:8px;">
+                                <span class="badge badge-warning">Question ${currentQIndex+1}/${qList.length}</span>
+                                ${currQ.category ? `<span class="badge badge-success">${currQ.category}</span>` : ''}
                             </div>
                             <div class="question-text">${currQ.question}</div>
                             <div class="options-grid" id="optionsContainer"></div>
                         </div>
-                        <div class="nav-buttons" style="display: flex; gap: 15px; margin-top: 25px;">
+                        <div class="nav-buttons">
                             <button id="prevBtn" class="btn btn-secondary" ${currentQIndex === 0 ? 'disabled' : ''}><i class="fas fa-arrow-left"></i> Previous</button>
                             <button id="nextBtn" class="btn btn-primary">Next <i class="fas fa-arrow-right"></i></button>
-                            ${currentQIndex === qList.length - 1 ? '<button id="submitBtn" class="btn btn-success"><i class="fas fa-check-circle"></i> Submit Test</button>' : ''}
+                            ${currentQIndex === qList.length-1 ? '<button id="submitBtn" class="btn btn-success"><i class="fas fa-check-circle"></i> Submit Test</button>' : ''}
                         </div>
                     </div>
                     <div>
-                        <h3 style="color: white; margin-bottom: 1rem;"><i class="fas fa-palette"></i> Question Palette</h3>
+                        <h3 style="color:white; margin-bottom: 0.8rem;"><i class="fas fa-palette"></i> Question Palette</h3>
                         <div class="palette-grid" id="paletteGrid"></div>
-                        <div style="margin-top: 1rem; font-size: 0.75rem; color: #6c757d;">
-                            <div><i class="fas fa-circle" style="color: #10b981;"></i> Answered</div>
-                            <div><i class="fas fa-circle" style="color: #667eea;"></i> Current</div>
-                            <div><i class="fas fa-circle" style="color: #6c757d;"></i> Unanswered</div>
+                        <div style="margin-top: 1rem; font-size: 0.7rem; color:#94a3b8;">
+                            <i class="fas fa-circle" style="color:#10b981;"></i> Answered &nbsp;
+                            <i class="fas fa-circle" style="color:#6366f1;"></i> Current
                         </div>
                     </div>
                 </div>
@@ -1288,15 +1061,15 @@
         const optsDiv = document.getElementById('optionsContainer');
         optionsArr.forEach((opt, idx) => {
             const isSelected = (currentAnswer === opt);
-            const optionDiv = document.createElement('div');
-            optionDiv.className = `option ${isSelected ? 'selected' : ''}`;
-            optionDiv.innerHTML = `<span class="option-prefix">${prefix[idx]}</span><span style="color: white;">${opt}</span>`;
-            optionDiv.onclick = () => {
+            const div = document.createElement('div');
+            div.className = `option ${isSelected ? 'selected' : ''}`;
+            div.innerHTML = `<span class="option-prefix">${prefix[idx]}</span><span>${opt}</span>`;
+            div.onclick = () => {
                 testSession.answers[currentQIndex] = opt;
                 persistSession(testSession);
                 renderTest();
             };
-            optsDiv.appendChild(optionDiv);
+            optsDiv.appendChild(div);
         });
         
         const palette = document.getElementById('paletteGrid');
@@ -1304,10 +1077,10 @@
             const isAnswered = testSession.answers[i] !== undefined;
             const btn = document.createElement('div');
             btn.className = `palette-item ${isAnswered ? 'answered' : ''} ${i === currentQIndex ? 'current' : ''}`;
-            btn.innerText = i + 1;
+            btn.innerText = i+1;
             btn.onclick = () => {
                 currentQIndex = i;
-                testSession.currentIndex = currentQIndex;
+                testSession.currentIndex = i;
                 persistSession(testSession);
                 renderTest();
             };
@@ -1332,13 +1105,11 @@
             }
         });
         
-        if (document.getElementById('submitBtn')) {
-            document.getElementById('submitBtn').onclick = () => {
-                if (confirm("Are you sure you want to submit your test? This action cannot be undone.")) {
-                    submitTestAndSave();
-                }
-            };
-        }
+        document.getElementById('submitBtn')?.addEventListener('click', () => {
+            if (confirm("Are you sure you want to submit your test?")) {
+                submitTestAndSave();
+            }
+        });
         
         let mins = Math.floor(testSession.remainingSecs / 60);
         let secs = testSession.remainingSecs % 60;
@@ -1347,44 +1118,48 @@
 
     function renderResults() {
         const res = window.lastResult;
-        if (!res) { currentView = 'landing'; renderApp(); return; }
+        if (!res) {
+            console.error("No results found");
+            currentView = 'landing';
+            renderApp();
+            return;
+        }
         
         let reviewRows = '';
         res.review.forEach((item, idx) => {
             reviewRows += `
                 <tr class="${item.status ? 'correct-row' : 'incorrect-row'}">
-                    <td style="padding: 12px; color: white;">${idx + 1}</td>
-                    <td style="padding: 12px; color: white;">${item.question}</td>
-                    <td style="padding: 12px;"><span class="badge ${item.status ? 'badge-success' : 'badge-danger'}" style="color: white;">${item.userAnswer}</span></td>
-                    <td style="padding: 12px;"><span class="badge badge-success" style="color: white;">${item.correct}</span></td>
-                    <td style="padding: 12px; color: white;">${item.status ? '<i class="fas fa-check-circle" style="color:#10b981"></i> Correct' : '<i class="fas fa-times-circle" style="color:#ef4444"></i> Incorrect'}</td>
+                    <td>${idx + 1}</td>
+                    <td>${item.question}</td>
+                    <td><span class="badge ${item.status ? 'badge-success' : 'badge-warning'}">${item.userAnswer}</span></td>
+                    <td><span class="badge badge-success">${item.correct}</span></td>
+                    <td>${item.status ? '✓ Correct' : '✗ Incorrect'}</td>
                 </tr>
             `;
         });
         
         root.innerHTML = `
-            <div class="glass-card animate__animated animate__fadeInUp" style="padding: 2rem;">
-                <div style="text-align: center;">
-                    <i class="fas fa-chart-line" style="font-size: 3rem; color: #667eea;"></i>
+            <div class="glass-card" style="padding: clamp(1rem, 4vw, 2rem);">
+                <div style="text-align:center;">
+                    <i class="fas fa-chart-line" style="font-size: clamp(2rem, 6vw, 3rem); color: #818cf8;"></i>
                     <h1>Test Results</h1>
-                    <p style="color: #a0aec0;">${res.studentName} | ${res.examCode}</p>
+                    <p style="color:#94a3b8;">${res.studentName} | ${res.examCode}</p>
                 </div>
-                
                 <div class="score-card">
                     <div class="score-number">${res.score}/${res.total}</div>
-                    <div style="font-size: 1.2rem; margin-top: 0.5rem; color: white;">Percentage: ${res.percentage.toFixed(2)}%</div>
-                    <div style="font-size: 1.3rem; font-weight: 700; margin-top: 0.5rem; color: ${res.gradeColor || '#10b981'};">${res.grade}</div>
+                    <div style="font-size: 1.1rem; margin-top: 0.5rem; color:#cbd5e1;">Percentage: ${res.percentage.toFixed(2)}%</div>
+                    <div style="font-size: 1.2rem; font-weight: 700; margin-top: 0.5rem; color: #10b981;">${res.grade}</div>
                 </div>
-                
-                <h3 style="color: white; margin: 1.5rem 0 1rem 0;"><i class="fas fa-list-ul"></i> Detailed Review</h3>
-                <div style="overflow-x: auto; max-height: 500px; overflow-y: auto;">
+                <h3 style="color:white; margin: 1.5rem 0 1rem 0;"><i class="fas fa-list-ul"></i> Detailed Review</h3>
+                <div class="table-wrapper">
                     <table class="results-table">
-                        <thead><tr style="background: rgba(102,126,234,0.2);"><th style="color: white;">#</th><th style="color: white;">Question</th><th style="color: white;">Your Answer</th><th style="color: white;">Correct Answer</th><th style="color: white;">Status</th></tr></thead>
+                        <thead>
+                            <tr><th>#</th><th>Question</th><th>Your Answer</th><th>Correct Answer</th><th>Status</th></tr>
+                        </thead>
                         <tbody>${reviewRows}</tbody>
                     </table>
                 </div>
-                
-                <div style="display: flex; gap: 15px; margin-top: 2rem; justify-content: center; flex-wrap: wrap;">
+                <div style="display: flex; gap: 12px; margin-top: 1.5rem; justify-content: center; flex-wrap: wrap;">
                     <button id="downloadCSV" class="btn btn-primary"><i class="fas fa-download"></i> Download CSV Report</button>
                     <button id="newTestBtn" class="btn btn-secondary"><i class="fas fa-redo-alt"></i> Take New Test</button>
                 </div>
@@ -1404,7 +1179,7 @@
             link.download = `${res.studentName}_${res.examCode}_results.csv`;
             link.click();
             URL.revokeObjectURL(link.href);
-            showNotification("Report downloaded successfully!", "success");
+            showNotification("Report downloaded!", "success");
         };
         
         document.getElementById('newTestBtn').onclick = () => {
@@ -1416,97 +1191,74 @@
 
     function renderAdmin() {
         const exams = getExams();
-        const analytics = getAnalytics();
+        const attempts = getAttempts();
+        const totalTests = attempts.length;
+        const avgScore = totalTests > 0 ? attempts.reduce((s, a) => s + a.percentage, 0) / totalTests : 0;
+        const passRate = totalTests > 0 ? (attempts.filter(a => a.percentage >= 60).length / totalTests) * 100 : 0;
+        
         let examListHtml = '';
         for (let [code, exam] of Object.entries(exams)) {
             examListHtml += `
-                <div class="animate__animated animate__fadeInLeft" style="background: rgba(30, 35, 48, 0.6); border-radius: 16px; padding: 1rem; margin-bottom: 0.8rem; border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div style="background:rgba(0,0,0,0.3); border-radius:16px; padding:1rem; margin-bottom:0.8rem; border:1px solid var(--border);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                         <div>
-                            <strong style="color: white; font-family: monospace; font-size: 1.1rem;"><i class="fas fa-file-alt"></i> ${code}</strong><br/>
-                            <small style="color: #a0aec0;">📄 ${exam.questions.length} questions | ⏱️ ${exam.timerMinutes} minutes</small><br/>
-                            <small style="color: #10b981;">📊 ${exam.totalAttempts || 0} attempts | Avg: ${(exam.averageScore || 0).toFixed(1)}%</small>
+                            <strong style="color:white; font-size:1rem;">📌 ${code}</strong><br/>
+                            <small style="color:#94a3b8;">📄 ${exam.questions.length} questions | ⏱️ ${exam.timerMinutes} min</small><br/>
+                            <small style="color:#10b981;">📊 ${exam.totalAttempts || 0} attempts | Avg: ${(exam.averageScore || 0).toFixed(1)}%</small>
                         </div>
-                        ${code !== 'PROCTOR2024' ? `<button class="btn btn-danger" style="padding: 8px 16px;" onclick="window.deleteExamWrapper('${code}')"><i class="fas fa-trash"></i> Delete</button>` : '<span class="badge badge-warning"><i class="fas fa-star"></i> Default Exam</span>'}
+                        ${code !== 'PROCTOR2024' ? `<button class="btn btn-danger" style="padding:6px 14px;" onclick="window.deleteExamWrapper('${code}')"><i class="fas fa-trash"></i> Delete</button>` : '<span class="badge badge-warning"><i class="fas fa-star"></i> Default</span>'}
                     </div>
                 </div>
             `;
         }
         
-        const attempts = getAttempts();
         let attemptsHtml = '';
-        attempts.slice().reverse().slice(0, 20).forEach(a => {
+        attempts.slice().reverse().slice(0, 15).forEach(a => {
             attemptsHtml += `
-                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                    <td style="padding: 10px; color: white;"><strong>${a.studentName}</strong></td>
-                    <td style="padding: 10px;"><span class="badge badge-warning" style="color: white;">${a.examCode}</span></td>
-                    <td style="padding: 10px; color: white;">${new Date(a.timestamp).toLocaleString()}</td>
-                    <td style="padding: 10px; color: white;">${a.score}/${a.total}</td>
-                    <td style="padding: 10px; color: white;">${a.percentage.toFixed(1)}%</td>
-                    <td style="padding: 10px; color: ${a.percentage >= 60 ? '#10b981' : '#ef4444'};">${a.grade.split(' ')[0]}</td>
+                <tr style="border-bottom:1px solid var(--border);">
+                    <td style="padding:10px;"><strong style="color:white;">${a.studentName}</strong></td>
+                    <td style="padding:10px;"><span class="badge badge-warning">${a.examCode}</span></td>
+                    <td style="padding:10px; color:#94a3b8;">${new Date(a.timestamp).toLocaleDateString()}</td>
+                    <td style="padding:10px; color:white;">${a.score}/${a.total}</td>
+                    <td style="padding:10px; color:white;">${a.percentage.toFixed(1)}%</td>
+                    <td style="padding:10px; color:${a.percentage >= 60 ? '#10b981' : '#f59e0b'};">${a.grade.split(' ')[0]}</td>
                 </tr>
             `;
         });
         
         root.innerHTML = `
-            <div class="glass-card animate__animated animate__fadeIn" style="padding: 2rem;">
-                <h2 style="color: white;"><i class="fas fa-crown"></i> Admin Control Center</h2>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
-                    <div style="background: linear-gradient(135deg, #667eea20, #764ba220); border-radius: 20px; padding: 1.2rem;">
-                        <i class="fas fa-chart-line" style="font-size: 2rem; color: #667eea;"></i>
-                        <h3 style="color: white; margin-top: 0.5rem;">${analytics.totalTests || 0}</h3>
-                        <p style="color: #a0aec0;">Total Tests Taken</p>
+            <div class="glass-card" style="padding: clamp(1rem, 4vw, 2rem);">
+                <h2 style="color:white;"><i class="fas fa-crown"></i> Admin Control Center</h2>
+                <div class="stats-grid">
+                    <div class="stat-card"><i class="fas fa-chart-line" style="font-size:2rem; color:#818cf8;"></i><h3 style="color:white; margin-top:8px;">${totalTests}</h3><p style="color:#94a3b8;">Total Tests</p></div>
+                    <div class="stat-card"><i class="fas fa-percent" style="font-size:2rem; color:#10b981;"></i><h3 style="color:white; margin-top:8px;">${avgScore.toFixed(1)}%</h3><p style="color:#94a3b8;">Average Score</p></div>
+                    <div class="stat-card"><i class="fas fa-trophy" style="font-size:2rem; color:#f59e0b;"></i><h3 style="color:white; margin-top:8px;">${passRate.toFixed(1)}%</h3><p style="color:#94a3b8;">Pass Rate</p></div>
+                </div>
+                <div class="admin-grid">
+                    <div>
+                        <h3 style="color:white;"><i class="fas fa-plus-circle"></i> Create New Exam</h3>
+                        <div class="input-group"><label>Exam Code</label><input type="text" id="newExamCode" class="input-field" placeholder="e.g., FINAL2025"></div>
+                        <div class="input-group"><label>Time Limit (minutes)</label><input type="number" id="newExamTimer" class="input-field" value="30"></div>
+                        <div class="input-group"><label>Upload Questions (Excel/CSV)</label><input type="file" id="examQuestionsFile" class="input-field" accept=".xlsx,.csv"></div>
+                        <button id="createExamBtn" class="btn btn-primary" style="width:100%;"><i class="fas fa-upload"></i> Create Exam</button>
+                        <button id="templateBtn" class="btn btn-secondary" style="width:100%; margin-top:10px;"><i class="fas fa-download"></i> Download Template</button>
                     </div>
-                    <div style="background: linear-gradient(135deg, #10b98120, #05966920); border-radius: 20px; padding: 1.2rem;">
-                        <i class="fas fa-percent" style="font-size: 2rem; color: #10b981;"></i>
-                        <h3 style="color: white; margin-top: 0.5rem;">${(analytics.averageScore || 0).toFixed(1)}%</h3>
-                        <p style="color: #a0aec0;">Average Score</p>
-                    </div>
-                    <div style="background: linear-gradient(135deg, #f59e0b20, #d9770620); border-radius: 20px; padding: 1.2rem;">
-                        <i class="fas fa-trophy" style="font-size: 2rem; color: #f59e0b;"></i>
-                        <h3 style="color: white; margin-top: 0.5rem;">${(analytics.passRate || 0).toFixed(1)}%</h3>
-                        <p style="color: #a0aec0;">Pass Rate</p>
+                    <div>
+                        <h3 style="color:white;"><i class="fas fa-database"></i> Existing Exams (${Object.keys(exams).length})</h3>
+                        <div style="max-height:350px; overflow-y:auto;">${examListHtml || '<p style="color:#94a3b8;">No exams created yet.</p>'}</div>
                     </div>
                 </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin: 2rem 0;">
-                    <div>
-                        <h3 style="color: white;"><i class="fas fa-plus-circle"></i> Create New Exam</h3>
-                        <div class="input-group">
-                            <label style="color: #a0aec0;">Exam Code</label>
-                            <input type="text" id="newExamCode" class="input-field" placeholder="e.g., FINAL2025">
-                        </div>
-                        <div class="input-group">
-                            <label style="color: #a0aec0;">Time Limit (minutes)</label>
-                            <input type="number" id="newExamTimer" class="input-field" value="30">
-                        </div>
-                        <div class="input-group">
-                            <label style="color: #a0aec0;">Upload Questions (Excel/CSV)</label>
-                            <input type="file" id="examQuestionsFile" class="input-field" accept=".xlsx, .csv, .xls">
-                        </div>
-                        <button id="createExamBtn" class="btn btn-primary" style="width: 100%;"><i class="fas fa-upload"></i> Create Exam</button>
-                        <button id="templateBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;"><i class="fas fa-download"></i> Download Template</button>
-                    </div>
-                    
-                    <div>
-                        <h3 style="color: white;"><i class="fas fa-database"></i> Existing Exams (${Object.keys(exams).length})</h3>
-                        <div style="max-height: 400px; overflow-y: auto;">${examListHtml || '<p style="color: #a0aec0;">No exams created yet.</p>'}</div>
-                    </div>
-                </div>
-                
-                <h3 style="color: white; margin-top: 2rem;"><i class="fas fa-history"></i> Recent Test Attempts (Last 20)</h3>
-                <div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
-                    <table style="width: 100%; color: #a0aec0;">
-                        <thead><tr style="background: rgba(102,126,234,0.2);"><th style="color: white;">Student</th><th style="color: white;">Exam</th><th style="color: white;">Date</th><th style="color: white;">Score</th><th style="color: white;">%</th><th style="color: white;">Grade</th></tr></thead>
-                        <tbody>${attemptsHtml || '<tr><td colspan="6" style="text-align: center; color: white;">No attempts yet</td></tr>'}</tbody>
+                <h3 style="color:white; margin-top:1.5rem;"><i class="fas fa-history"></i> Recent Test Attempts</h3>
+                <div class="table-wrapper">
+                    <table style="width:100%;">
+                        <thead><tr style="background:rgba(99,102,241,0.15);"><th style="color:white; padding:10px;">Student</th><th style="color:white;">Exam</th><th style="color:white;">Date</th><th style="color:white;">Score</th><th style="color:white;">%</th><th style="color:white;">Grade</th></tr></thead>
+                        <tbody>${attemptsHtml || '<tr><td colspan="6" style="text-align:center; padding:20px; color:#94a3b8;">No attempts yet</td></tr>'}</tbody>
                     </table>
                 </div>
-                
-                <div style="display: flex; gap: 15px; margin-top: 2rem; flex-wrap: wrap;">
-                    <button id="exportResultsBtn" class="btn btn-success"><i class="fas fa-file-excel"></i> Export All Results</button>
-                    <button id="resetAllBtn" class="btn btn-danger"><i class="fas fa-radar"></i> Reset Everything</button>
-                    <button id="adminLogout" class="btn btn-secondary"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                <div style="display:flex; gap:12px; margin-top:1.5rem; flex-wrap:wrap;">
+                    <button id="exportBtn" class="btn btn-success"><i class="fas fa-file-excel"></i> Export All Results</button>
+                    <button id="resetBtn" class="btn btn-danger"><i class="fas fa-radar"></i> Reset Everything</button>
+                    <button id="logoutBtn" class="btn btn-secondary"><i class="fas fa-sign-out-alt"></i> Logout</button>
                 </div>
             </div>
         `;
@@ -1514,33 +1266,27 @@
         window.deleteExamWrapper = (code) => deleteExam(code);
         
         document.getElementById('createExamBtn').onclick = () => {
-            const examCode = document.getElementById('newExamCode').value.trim().toUpperCase();
-            const timerVal = parseInt(document.getElementById('newExamTimer').value);
+            const code = document.getElementById('newExamCode').value.trim().toUpperCase();
+            const timer = parseInt(document.getElementById('newExamTimer').value);
             const file = document.getElementById('examQuestionsFile').files[0];
-            if (!examCode) { showNotification("Enter exam code!", "warning"); return; }
-            if (!timerVal || timerVal < 1) { showNotification("Enter valid timer!", "warning"); return; }
-            if (!file) { showNotification("Select Excel/CSV file!", "warning"); return; }
-            uploadExcelToExam(file, examCode, timerVal, (success) => { if (success) renderAdmin(); });
+            if (!code || !timer || !file) { showNotification("Fill all fields!", "warning"); return; }
+            uploadExcelToExam(file, code, timer, (s) => { if (s) renderAdmin(); });
         };
-        
         document.getElementById('templateBtn').onclick = () => downloadTemplate();
-        document.getElementById('exportResultsBtn').onclick = () => exportResults();
-        document.getElementById('resetAllBtn').onclick = () => resetAllData();
-        document.getElementById('adminLogout').onclick = () => {
-            currentView = 'landing';
-            renderApp();
-        };
+        document.getElementById('exportBtn').onclick = () => exportResults();
+        document.getElementById('resetBtn').onclick = () => resetAllData();
+        document.getElementById('logoutBtn').onclick = () => { currentView = 'landing'; renderApp(); };
     }
-    
-    // Tab switching detection with warning
+
+    // Tab switching detection
+    let warningCount = 0;
     document.addEventListener('visibilitychange', () => {
         if (currentView === 'test' && testSession && document.hidden) {
             warningCount++;
-            showNotification(`⚠️ Warning: Tab switching detected (${warningCount})! Academic integrity violation logged.`, "warning");
+            showNotification(`⚠️ Tab switching detected (${warningCount})!`, "warning");
         }
     });
     
-    // Initialize
     initDefaultExam();
     renderApp();
 </script>
