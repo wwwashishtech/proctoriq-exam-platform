@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    <title>ProctorIQ Elite | Enterprise Assessment Suite v4.0</title>
+    <title>ProctorIQ | Professional Assessment Platform</title>
     <!-- SheetJS for Excel/CSV parsing -->
     <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
     <!-- Font Awesome 6 -->
@@ -18,29 +18,29 @@
         }
 
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #8b5cf6;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --dark-bg: #0f0f1a;
-            --card-bg: rgba(25, 28, 38, 0.92);
+            --primary: #4361ee;
+            --primary-dark: #3b4fdb;
+            --secondary: #7209b7;
+            --success: #06ffa5;
+            --warning: #ffb700;
+            --danger: #ff4d4d;
+            --dark: #0a0c15;
+            --card-bg: rgba(18, 22, 35, 0.95);
             --text-primary: #ffffff;
-            --text-secondary: #cbd5e1;
-            --border: rgba(255, 255, 255, 0.12);
+            --text-secondary: #b0b3c8;
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+            background: linear-gradient(135deg, #0a0c15 0%, #121623 100%);
             min-height: 100vh;
             overflow-x: hidden;
             color: var(--text-primary);
         }
 
-        /* Animated Background */
-        .bg-animation {
+        /* Particle Background */
+        .particles {
             position: fixed;
             top: 0;
             left: 0;
@@ -50,63 +50,53 @@
             overflow: hidden;
         }
 
-        .bg-animation::before {
-            content: '';
+        .particle {
             position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15), transparent 50%);
-            animation: rotate 30s linear infinite;
+            background: radial-gradient(circle, rgba(67, 97, 238, 0.4), transparent);
+            border-radius: 50%;
+            animation: floatParticle 15s infinite linear;
         }
 
-        .bg-animation::after {
-            content: '';
-            position: absolute;
-            width: 150%;
-            height: 150%;
-            background: radial-gradient(circle at 80% 30%, rgba(139, 92, 246, 0.1), transparent 60%);
-            animation: rotateReverse 25s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes rotateReverse {
-            from { transform: rotate(360deg); }
-            to { transform: rotate(0deg); }
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
         }
 
         .container {
-            max-width: 1600px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 16px;
+            padding: 20px;
             position: relative;
             z-index: 1;
         }
 
-        /* Glass Card - High Contrast */
+        /* Glass Morphism Card */
         .glass-card {
             background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border-radius: 28px;
+            backdrop-filter: blur(16px);
+            border-radius: 32px;
             border: 1px solid var(--border);
-            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4);
-            transition: all 0.3s ease;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
         }
 
         .panel {
-            max-width: 550px;
+            max-width: 520px;
             margin: 1rem auto;
-            padding: 1.8rem;
+            padding: 2rem;
         }
 
-        /* Typography - High Contrast */
         h1 {
-            font-size: clamp(1.8rem, 6vw, 2.8rem);
+            font-size: clamp(2rem, 6vw, 3rem);
             font-weight: 800;
-            background: linear-gradient(135deg, #818cf8, #c084fc, #f472b6);
+            background: linear-gradient(135deg, #4361ee, #7209b7, #f72585);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -114,24 +104,20 @@
         }
 
         h2 {
-            font-size: clamp(1.2rem, 4vw, 1.6rem);
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            font-weight: 700;
             color: var(--text-primary);
-            font-weight: 600;
         }
 
         h3 {
             font-size: clamp(1rem, 3.5vw, 1.2rem);
-            color: var(--text-primary);
             font-weight: 600;
-        }
-
-        p, span, label, .text-muted {
-            color: var(--text-secondary);
+            color: var(--text-primary);
         }
 
         /* Buttons */
         .btn {
-            padding: clamp(10px, 3vw, 14px) clamp(20px, 5vw, 28px);
+            padding: clamp(10px, 3vw, 14px) clamp(24px, 5vw, 32px);
             border-radius: 60px;
             font-weight: 600;
             font-size: clamp(0.85rem, 2.5vw, 0.95rem);
@@ -148,31 +134,32 @@
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             color: white;
             border: 1px solid var(--border);
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .btn-success {
-            background: linear-gradient(135deg, var(--success), #059669);
-            color: white;
+            background: linear-gradient(135deg, #06ffa5, #0d9488);
+            color: #0a0c15;
+            font-weight: 700;
         }
 
         .btn-danger {
-            background: linear-gradient(135deg, var(--danger), #dc2626);
+            background: linear-gradient(135deg, #ff4d4d, #dc2626);
             color: white;
         }
 
@@ -203,31 +190,31 @@
 
         .input-field:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
         }
 
         /* Timer */
         .timer-card {
-            background: linear-gradient(135deg, #1e1b2e, #0a0a14);
+            background: linear-gradient(135deg, #1a1f2e, #0f111f);
             padding: 10px 20px;
             border-radius: 60px;
             display: flex;
             align-items: center;
             gap: 10px;
-            border: 1px solid rgba(250, 204, 21, 0.4);
+            border: 1px solid rgba(6, 255, 165, 0.3);
         }
 
         .timer-display {
             font-family: 'Courier New', monospace;
             font-size: clamp(1.2rem, 4vw, 1.8rem);
             font-weight: 800;
-            color: #facc15;
+            color: #06ffa5;
             letter-spacing: 2px;
         }
 
         /* Progress */
         .progress-container {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             border-radius: 30px;
             height: 8px;
             overflow: hidden;
@@ -235,10 +222,10 @@
         }
 
         .progress-fill {
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            background: linear-gradient(90deg, var(--primary), var(--secondary), #f72585);
             height: 100%;
             width: 0%;
-            transition: width 0.4s ease;
+            transition: width 0.5s ease;
             border-radius: 30px;
         }
 
@@ -251,22 +238,24 @@
 
         @media (min-width: 768px) {
             .grid-layout {
-                grid-template-columns: 1fr 300px;
-                gap: 1.8rem;
+                grid-template-columns: 1fr 280px;
+                gap: 2rem;
             }
             .container {
-                padding: 20px;
+                padding: 24px;
             }
-            .panel {
-                padding: 2.5rem;
-                margin: 2rem auto;
+        }
+
+        @media (min-width: 1024px) {
+            .grid-layout {
+                grid-template-columns: 1fr 320px;
             }
         }
 
         /* Question Card */
         .question-card {
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 24px;
+            border-radius: 28px;
             padding: clamp(1.2rem, 4vw, 1.8rem);
             border: 1px solid var(--border);
         }
@@ -275,11 +264,11 @@
             font-size: clamp(1.1rem, 4vw, 1.3rem);
             font-weight: 600;
             color: white;
-            line-height: 1.4;
+            line-height: 1.5;
             margin-bottom: 1.5rem;
         }
 
-        /* Options - High Contrast */
+        /* Options */
         .options-grid {
             display: flex;
             flex-direction: column;
@@ -299,15 +288,15 @@
         }
 
         .option:hover {
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(67, 97, 238, 0.2);
             border-color: var(--primary);
-            transform: translateX(4px);
+            transform: translateX(5px);
         }
 
         .option.selected {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(139, 92, 246, 0.3));
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.3), rgba(114, 9, 183, 0.3));
             border-color: var(--primary);
-            box-shadow: 0 0 12px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 0 15px rgba(67, 97, 238, 0.3);
         }
 
         .option-prefix {
@@ -354,15 +343,15 @@
         }
 
         .palette-item.answered {
-            background: linear-gradient(135deg, var(--success), #059669);
-            color: white;
+            background: linear-gradient(135deg, #06ffa5, #0d9488);
+            color: #0a0c15;
         }
 
         .palette-item.current {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             transform: scale(1.05);
-            box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
+            box-shadow: 0 0 12px rgba(67, 97, 238, 0.5);
         }
 
         /* Results Table */
@@ -382,23 +371,26 @@
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid var(--border);
-            color: var(--text-secondary);
         }
 
         .results-table th {
-            background: rgba(99, 102, 241, 0.15);
+            background: rgba(67, 97, 238, 0.2);
             color: white;
             font-weight: 600;
         }
 
+        .results-table td {
+            color: var(--text-secondary);
+        }
+
         .correct-row {
-            background: rgba(16, 185, 129, 0.1);
-            border-left: 3px solid var(--success);
+            background: rgba(6, 255, 165, 0.08);
+            border-left: 3px solid #06ffa5;
         }
 
         .incorrect-row {
-            background: rgba(239, 68, 68, 0.1);
-            border-left: 3px solid var(--danger);
+            background: rgba(255, 77, 77, 0.08);
+            border-left: 3px solid #ff4d4d;
         }
 
         .correct-row td, .incorrect-row td {
@@ -407,9 +399,9 @@
 
         /* Score Card */
         .score-card {
-            background: linear-gradient(135deg, #1e1b2e, #0a0a14);
-            border-radius: 24px;
-            padding: 1.8rem;
+            background: linear-gradient(135deg, #1a1f2e, #0f111f);
+            border-radius: 28px;
+            padding: 2rem;
             text-align: center;
             margin: 1.5rem 0;
         }
@@ -417,7 +409,7 @@
         .score-number {
             font-size: clamp(3rem, 10vw, 4.5rem);
             font-weight: 800;
-            background: linear-gradient(135deg, #818cf8, #c084fc);
+            background: linear-gradient(135deg, #06ffa5, #4361ee, #f72585);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -433,27 +425,27 @@
         }
 
         .badge-warning {
-            background: rgba(245, 158, 11, 0.2);
-            color: #fbbf24;
-            border: 1px solid #f59e0b;
+            background: rgba(255, 183, 0, 0.2);
+            color: #ffb700;
+            border: 1px solid #ffb700;
         }
 
         .badge-success {
-            background: rgba(16, 185, 129, 0.2);
-            color: #34d399;
-            border: 1px solid #10b981;
+            background: rgba(6, 255, 165, 0.2);
+            color: #06ffa5;
+            border: 1px solid #06ffa5;
         }
 
-        /* Admin Grid */
+        /* Admin Stats */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 1rem;
             margin: 1.5rem 0;
         }
 
         .stat-card {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.1));
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.15), rgba(114, 9, 183, 0.1));
             border-radius: 20px;
             padding: 1.2rem;
             text-align: center;
@@ -477,26 +469,28 @@
         /* Notification */
         .notification {
             position: fixed;
-            top: 16px;
-            right: 16px;
-            left: 16px;
-            background: #1e1b2e;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #1a1f2e, #0f111f);
             color: white;
-            padding: 14px 20px;
+            padding: 14px 24px;
             border-radius: 60px;
             z-index: 10000;
             font-weight: 500;
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
             border: 1px solid var(--border);
+            animation: slideIn 0.3s ease;
+            max-width: 90vw;
         }
 
-        @media (min-width: 768px) {
-            .notification {
-                top: 20px;
-                right: 20px;
-                left: auto;
-                max-width: 400px;
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
             }
         }
 
@@ -525,7 +519,7 @@
 
         .footer-icons {
             display: flex;
-            gap: 16px;
+            gap: 20px;
             justify-content: center;
             flex-wrap: wrap;
             font-size: 0.75rem;
@@ -558,35 +552,36 @@
     </style>
 </head>
 <body>
-<div class="bg-animation"></div>
+<div class="particles" id="particles"></div>
 <canvas id="confetti-canvas"></canvas>
 <div class="container" id="appRoot"></div>
 
 <script>
     // ==================== STORAGE KEYS ====================
-    const STORAGE_EXAMS = 'proctoriq_exams_v4';
-    const STORAGE_ATTEMPTS = 'proctoriq_attempts_v4';
-    const STORAGE_ACTIVE_SESSION = 'proctoriq_session_v4';
-    const STORAGE_CURRENT_EXAM = 'proctoriq_current_exam_v4';
+    const STORAGE_EXAMS = 'proctoriq_exams_v5';
+    const STORAGE_ATTEMPTS = 'proctoriq_attempts_v5';
+    const STORAGE_ACTIVE_SESSION = 'proctoriq_session_v5';
+    const STORAGE_CURRENT_EXAM = 'proctoriq_current_exam_v5';
 
     // ==================== DEFAULT QUESTIONS ====================
     const DEFAULT_QUESTIONS = [
         { sr_no: 1, question: "What is the capital of France?", option_a: "Berlin", option_b: "Madrid", option_c: "Paris", option_d: "Lisbon", correct_answer: "Paris", category: "Geography" },
         { sr_no: 2, question: "Which planet is known as the Red Planet?", option_a: "Earth", option_b: "Mars", option_c: "Jupiter", option_d: "Venus", correct_answer: "Mars", category: "Astronomy" },
         { sr_no: 3, question: "Who painted the Mona Lisa?", option_a: "Van Gogh", option_b: "Picasso", option_c: "Da Vinci", option_d: "Rembrandt", correct_answer: "Da Vinci", category: "Art" },
-        { sr_no: 4, question: "What is 5 × 8?", option_a: "35", option_b: "40", option_c: "45", option_d: "30", correct_answer: "40", category: "Math" },
+        { sr_no: 4, question: "What is 5 × 8?", option_a: "35", option_b: "40", option_c: "45", option_d: "30", correct_answer: "40", category: "Mathematics" },
         { sr_no: 5, question: "Which HTML tag is used for an unordered list?", option_a: "<ol>", option_b: "<li>", option_c: "<ul>", option_d: "<list>", correct_answer: "<ul>", category: "Programming" },
         { sr_no: 6, question: "What does CSS stand for?", option_a: "Creative Style Sheets", option_b: "Cascading Style Sheets", option_c: "Computer Style Sheets", option_d: "Colorful Style Sheets", correct_answer: "Cascading Style Sheets", category: "Programming" },
         { sr_no: 7, question: "Who wrote 'Hamlet'?", option_a: "Charles Dickens", option_b: "Mark Twain", option_c: "William Shakespeare", option_d: "Jane Austen", correct_answer: "William Shakespeare", category: "Literature" },
         { sr_no: 8, question: "What is the largest ocean on Earth?", option_a: "Atlantic Ocean", option_b: "Indian Ocean", option_c: "Arctic Ocean", option_d: "Pacific Ocean", correct_answer: "Pacific Ocean", category: "Geography" },
         { sr_no: 9, question: "Which year did World War II end?", option_a: "1943", option_b: "1944", option_c: "1945", option_d: "1946", correct_answer: "1945", category: "History" },
-        { sr_no: 10, question: "What is the square root of 64?", option_a: "6", option_b: "7", option_c: "8", option_d: "9", correct_answer: "8", category: "Math" }
+        { sr_no: 10, question: "What is the square root of 64?", option_a: "6", option_b: "7", option_c: "8", option_d: "9", correct_answer: "8", category: "Mathematics" }
     ];
 
+    // ==================== INITIALIZATION ====================
     function initDefaultExam() {
         let exams = getExams();
-        if (!exams['PROCTOR2024']) {
-            exams['PROCTOR2024'] = {
+        if (!exams['EXAM2024']) {
+            exams['EXAM2024'] = {
                 questions: [...DEFAULT_QUESTIONS],
                 timerMinutes: 30,
                 createdAt: new Date().toISOString(),
@@ -607,8 +602,8 @@
     }
 
     function getAttempts() {
-        const a = localStorage.getItem(STORAGE_ATTEMPTS);
-        return a ? JSON.parse(a) : [];
+        const stored = localStorage.getItem(STORAGE_ATTEMPTS);
+        return stored ? JSON.parse(stored) : [];
     }
 
     function saveAttempts(attempts) {
@@ -634,25 +629,47 @@
         return { shuffledQuestions: shuffledFull, optionsMapping };
     }
 
-    // Anti-cheat
+    // ==================== ANTI-CHEAT ====================
     function enforceAntiCheat() {
         document.addEventListener('contextmenu', (e) => e.preventDefault());
         document.addEventListener('copy', (e) => e.preventDefault());
         document.addEventListener('cut', (e) => e.preventDefault());
         document.addEventListener('paste', (e) => e.preventDefault());
         document.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey && (e.key === 'c' || e.key === 'v' || e.key === 'x')) || e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+            if ((e.ctrlKey && (e.key === 'c' || e.key === 'v' || e.key === 'x')) || 
+                e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.key === 'u')) {
                 e.preventDefault();
             }
         });
     }
 
+    // ==================== PARTICLES BACKGROUND ====================
+    function createParticles() {
+        const container = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            const size = Math.random() * 60 + 20;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.animationDelay = `${Math.random() * 20}s`;
+            particle.style.animationDuration = `${Math.random() * 15 + 10}s`;
+            container.appendChild(particle);
+        }
+    }
+    createParticles();
+
+    // ==================== GLOBAL STATE ====================
     let currentView = 'landing';
     let currentStudentName = null;
     let currentExamCode = null;
     let testSession = null;
     let currentQIndex = 0;
     let intervalTimer = null;
+    let warningCount = 0;
 
     function persistSession(sessionData) {
         localStorage.setItem(STORAGE_ACTIVE_SESSION, JSON.stringify(sessionData));
@@ -665,11 +682,11 @@
     }
 
     function showNotification(msg, type = "info") {
-        const colors = { success: '#10b981', warning: '#f59e0b', error: '#ef4444', info: '#6366f1' };
+        const colors = { success: '#06ffa5', warning: '#ffb700', error: '#ff4d4d', info: '#4361ee' };
         const notification = document.createElement('div');
         notification.className = 'notification';
         notification.style.background = colors[type] || colors.info;
-        notification.innerHTML = `${type === 'success' ? '✅' : type === 'warning' ? '⚠️' : type === 'error' ? '❌' : 'ℹ️'} ${msg}`;
+        notification.innerHTML = `${type === 'success' ? '✓' : type === 'warning' ? '⚠' : type === 'error' ? '✗' : 'ℹ'} ${msg}`;
         document.body.appendChild(notification);
         setTimeout(() => notification.remove(), 3000);
     }
@@ -677,7 +694,10 @@
     function startTest(examCode, studentName, resume = false, savedData = null) {
         const exams = getExams();
         const exam = exams[examCode];
-        if (!exam) { showNotification("Exam code not found!", "error"); return false; }
+        if (!exam) { 
+            showNotification("Exam code not found! Please check with your instructor.", "error"); 
+            return false; 
+        }
 
         currentExamCode = examCode;
         currentStudentName = studentName;
@@ -689,9 +709,14 @@
         } else {
             const { shuffledQuestions, optionsMapping } = buildShuffledTest(exam.questions);
             const newSession = {
-                studentName, examCode, startTime: Date.now(),
-                questions: shuffledQuestions, optionsMapping, answers: {},
-                remainingSecs: exam.timerMinutes * 60, currentIndex: 0
+                studentName, 
+                examCode, 
+                startTime: Date.now(),
+                questions: shuffledQuestions, 
+                optionsMapping, 
+                answers: {},
+                remainingSecs: exam.timerMinutes * 60, 
+                currentIndex: 0
             };
             testSession = newSession;
             currentQIndex = 0;
@@ -721,6 +746,7 @@
                     timerEl.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
                 }
                 if (testSession.remainingSecs === 300) showNotification("5 minutes remaining!", "warning");
+                if (testSession.remainingSecs === 60) showNotification("1 minute remaining!", "warning");
                 if (testSession.remainingSecs === 0) autoSubmitTest();
             }
         }, 1000);
@@ -729,7 +755,7 @@
     function autoSubmitTest() {
         if (intervalTimer) clearInterval(intervalTimer);
         if (currentView === 'test' && testSession) {
-            showNotification("Time's up! Submitting...", "warning");
+            showNotification("Time's up! Submitting your test...", "warning");
             submitTestAndSave();
         }
     }
@@ -760,12 +786,19 @@
         
         const total = questionsList.length;
         const percentage = (score / total) * 100;
-        let grade = percentage >= 90 ? 'A+ (Outstanding)' : percentage >= 75 ? 'A (Excellent)' : percentage >= 60 ? 'B (Good)' : percentage >= 45 ? 'C (Average)' : 'F (Needs Improvement)';
+        let grade = '';
+        let gradeColor = '';
+        if (percentage >= 90) { grade = 'A+ (Outstanding)'; gradeColor = '#06ffa5'; }
+        else if (percentage >= 75) { grade = 'A (Excellent)'; gradeColor = '#06ffa5'; }
+        else if (percentage >= 60) { grade = 'B (Good)'; gradeColor = '#ffb700'; }
+        else if (percentage >= 45) { grade = 'C (Average)'; gradeColor = '#ffb700'; }
+        else { grade = 'F (Needs Improvement)'; gradeColor = '#ff4d4d'; }
 
         const attemptRecord = {
             studentName: testSession.studentName,
             examCode: testSession.examCode,
             timestamp: new Date().toISOString(),
+            formattedDate: new Date().toLocaleString(),
             score: score,
             total: total,
             percentage: percentage,
@@ -787,7 +820,12 @@
             saveExams(exams);
         }
 
-        window.lastResult = { score, total, percentage, grade, review, studentName: testSession.studentName, examCode: testSession.examCode };
+        window.lastResult = { 
+            score, total, percentage, grade, review, 
+            studentName: testSession.studentName, 
+            examCode: testSession.examCode,
+            gradeColor
+        };
         
         // Confetti for good scores
         if (percentage >= 75) {
@@ -808,14 +846,14 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         const particles = [];
-        for (let i = 0; i < 120; i++) {
+        for (let i = 0; i < 150; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height - canvas.height,
-                size: Math.random() * 7 + 3,
-                speedY: Math.random() * 5 + 2,
-                speedX: (Math.random() - 0.5) * 2.5,
-                color: `hsl(${Math.random() * 360}, 80%, 60%)`,
+                size: Math.random() * 8 + 3,
+                speedY: Math.random() * 6 + 2,
+                speedX: (Math.random() - 0.5) * 3,
+                color: `hsl(${Math.random() * 360}, 80%, 65%)`,
                 rotation: Math.random() * 360
             });
         }
@@ -840,9 +878,10 @@
             if (active) requestAnimationFrame(animate);
         }
         animate();
-        setTimeout(() => ctx.clearRect(0, 0, canvas.width, canvas.height), 4500);
+        setTimeout(() => ctx.clearRect(0, 0, canvas.width, canvas.height), 5000);
     }
 
+    // ==================== ADMIN FUNCTIONS ====================
     function uploadExcelToExam(file, examCode, timerValue, callback) {
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -878,7 +917,7 @@
                 showNotification(`Exam "${examCode}" created with ${newQuestions.length} questions!`, "success");
                 callback(true);
             } else {
-                showNotification("Invalid format. Use template.", "error");
+                showNotification("Invalid format. Please use the template.", "error");
                 callback(false);
             }
         };
@@ -892,31 +931,31 @@
         });
         const ws = XLSX.utils.aoa_to_sheet(wsData);
         const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'MCQ_Template');
-        XLSX.writeFile(wb, 'proctoriq_template.xlsx');
+        XLSX.utils.book_append_sheet(wb, ws, 'Question_Template');
+        XLSX.writeFile(wb, 'exam_template.xlsx');
         showNotification("Template downloaded!", "success");
     }
 
     function resetAllData() {
-        if (confirm("⚠️ This will delete ALL exams and attempts!")) {
+        if (confirm("⚠️ WARNING: This will delete ALL exams and student attempts. This action cannot be undone!")) {
             localStorage.clear();
             initDefaultExam();
-            showNotification("All data reset to default!", "success");
+            showNotification("All data has been reset to default!", "success");
             currentView = 'landing';
             renderApp();
         }
     }
 
     function deleteExam(examCode) {
-        if (examCode === 'PROCTOR2024') {
-            showNotification("Cannot delete default exam!", "warning");
+        if (examCode === 'EXAM2024') {
+            showNotification("Cannot delete the default exam!", "warning");
             return;
         }
-        if (confirm(`Delete exam "${examCode}"?`)) {
+        if (confirm(`Delete exam "${examCode}" and all its data?`)) {
             const exams = getExams();
             delete exams[examCode];
             saveExams(exams);
-            showNotification(`Exam "${examCode}" deleted!`, "success");
+            showNotification(`Exam "${examCode}" deleted successfully!`, "success");
             renderAdmin();
         }
     }
@@ -929,15 +968,16 @@
         }
         const wsData = [['Student Name', 'Exam Code', 'Date', 'Score', 'Percentage', 'Grade']];
         attempts.forEach(a => {
-            wsData.push([a.studentName, a.examCode, new Date(a.timestamp).toLocaleString(), `${a.score}/${a.total}`, `${a.percentage.toFixed(2)}%`, a.grade]);
+            wsData.push([a.studentName, a.examCode, a.formattedDate || new Date(a.timestamp).toLocaleString(), `${a.score}/${a.total}`, `${a.percentage.toFixed(2)}%`, a.grade]);
         });
         const ws = XLSX.utils.aoa_to_sheet(wsData);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Results');
-        XLSX.writeFile(wb, `proctoriq_results_${new Date().toISOString().slice(0,10)}.xlsx`);
-        showNotification("Results exported!", "success");
+        XLSX.writeFile(wb, `exam_results_${new Date().toISOString().slice(0,10)}.xlsx`);
+        showNotification("Results exported successfully!", "success");
     }
 
+    // ==================== RENDER FUNCTIONS ====================
     const root = document.getElementById('appRoot');
 
     function renderApp() {
@@ -952,14 +992,14 @@
         root.innerHTML = `
             <div class="glass-card panel">
                 <div style="text-align:center;">
-                    <i class="fas fa-shield-alt" style="font-size: clamp(3rem, 8vw, 4rem); color: #818cf8;"></i>
-                    <h1>ProctorIQ Elite</h1>
-                    <p style="color: #94a3b8;">Enterprise Assessment Suite v4.0</p>
+                    <i class="fas fa-brain" style="font-size: clamp(3rem, 8vw, 4rem); color: #4361ee;"></i>
+                    <h1>ProctorIQ</h1>
+                    <p style="color: #b0b3c8;">Secure Online Assessment Platform</p>
                 </div>
                 <div style="margin: 1.8rem 0;">
                     <div class="input-group">
                         <label><i class="fas fa-qrcode"></i> Exam Code</label>
-                        <input type="text" id="examCodeInput" class="input-field" placeholder="PROCTOR2024" value="PROCTOR2024">
+                        <input type="text" id="examCodeInput" class="input-field" placeholder="Enter exam code (e.g., EXAM2024)">
                     </div>
                     <div class="input-group">
                         <label><i class="fas fa-user"></i> Full Name</label>
@@ -968,12 +1008,13 @@
                     <button id="startExamBtn" class="btn btn-primary" style="width:100%;"><i class="fas fa-play"></i> Start Examination</button>
                 </div>
                 <div style="text-align:center;">
-                    <button id="adminBtn" class="btn btn-secondary"><i class="fas fa-lock"></i> Admin Portal</button>
+                    <button id="adminBtn" class="btn btn-secondary"><i class="fas fa-crown"></i> Admin Portal</button>
                 </div>
-                <div class="footer-icons" style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+                <div class="footer-icons" style="margin-top: 1.8rem; padding-top: 1.2rem; border-top: 1px solid var(--border);">
                     <span><i class="fas fa-shield-alt"></i> Anti-Cheat</span>
                     <span><i class="fas fa-save"></i> Auto-Save</span>
                     <span><i class="fas fa-chart-line"></i> Analytics</span>
+                    <span><i class="fas fa-mobile-alt"></i> All Devices</span>
                 </div>
             </div>
         `;
@@ -981,16 +1022,22 @@
         document.getElementById('startExamBtn').onclick = () => {
             const examCode = document.getElementById('examCodeInput').value.trim().toUpperCase();
             const studentName = document.getElementById('studentNameInput').value.trim();
-            if (!examCode) { showNotification("Enter exam code!", "warning"); return; }
-            if (!studentName) { showNotification("Enter your name!", "warning"); return; }
+            if (!examCode) { showNotification("Please enter exam code!", "warning"); return; }
+            if (!studentName) { showNotification("Please enter your name!", "warning"); return; }
             const exams = getExams();
             if (!exams[examCode]) { showNotification(`Exam "${examCode}" not found!`, "error"); return; }
+            
             const savedSession = localStorage.getItem(STORAGE_ACTIVE_SESSION);
-            if (savedSession && JSON.parse(savedSession).examCode === examCode && confirm("Resume unfinished test?")) {
-                startTest(examCode, studentName, true, JSON.parse(savedSession));
-            } else {
-                startTest(examCode, studentName);
+            if (savedSession) {
+                const sess = JSON.parse(savedSession);
+                if (sess.examCode === examCode && sess.studentName === studentName && confirm("You have an unfinished test. Resume where you left off?")) {
+                    startTest(examCode, studentName, true, sess);
+                    return;
+                } else if (sess.examCode === examCode) {
+                    clearPersistedSession();
+                }
             }
+            startTest(examCode, studentName);
         };
         
         document.getElementById('adminBtn').onclick = () => {
@@ -999,7 +1046,7 @@
                 currentView = 'admin';
                 renderApp();
             } else {
-                showNotification("Wrong password!", "error");
+                showNotification("Invalid password!", "error");
             }
         };
     }
@@ -1018,24 +1065,24 @@
             <div class="glass-card" style="padding: clamp(1rem, 4vw, 1.8rem);">
                 <div class="test-header">
                     <div>
-                        <h2 style="color:white;"><i class="fas fa-graduation-cap"></i> ${testSession.examCode}</h2>
-                        <p style="color:#94a3b8;"><i class="fas fa-user"></i> ${testSession.studentName}</p>
+                        <h2 style="color:white;"><i class="fas fa-file-alt"></i> ${testSession.examCode}</h2>
+                        <p style="color:#b0b3c8;"><i class="fas fa-user"></i> ${testSession.studentName}</p>
                     </div>
                     <div class="timer-card">
-                        <i class="fas fa-hourglass-half" style="color:#facc15;"></i>
+                        <i class="fas fa-hourglass-half" style="color:#06ffa5;"></i>
                         <span class="timer-display" id="timerDisplay">--:--</span>
                     </div>
                 </div>
                 <div class="progress-container">
                     <div class="progress-fill" style="width: ${progressPercent}%"></div>
                 </div>
-                <p style="color:#94a3b8; text-align:right; margin-bottom: 1rem;">${answeredCount}/${qList.length} Answered</p>
+                <p style="color:#b0b3c8; text-align:right; margin-bottom: 1rem;">${answeredCount}/${qList.length} Questions Answered</p>
                 <div class="grid-layout">
                     <div>
                         <div class="question-card">
                             <div style="display:flex; justify-content:space-between; margin-bottom: 1rem; flex-wrap:wrap; gap:8px;">
-                                <span class="badge badge-warning">Question ${currentQIndex+1}/${qList.length}</span>
-                                ${currQ.category ? `<span class="badge badge-success">${currQ.category}</span>` : ''}
+                                <span class="badge badge-warning"><i class="fas fa-question-circle"></i> Question ${currentQIndex+1}/${qList.length}</span>
+                                ${currQ.category ? `<span class="badge badge-success"><i class="fas fa-tag"></i> ${currQ.category}</span>` : ''}
                             </div>
                             <div class="question-text">${currQ.question}</div>
                             <div class="options-grid" id="optionsContainer"></div>
@@ -1047,11 +1094,12 @@
                         </div>
                     </div>
                     <div>
-                        <h3 style="color:white; margin-bottom: 0.8rem;"><i class="fas fa-palette"></i> Question Palette</h3>
+                        <h3 style="color:white; margin-bottom: 0.8rem;"><i class="fas fa-th"></i> Question Palette</h3>
                         <div class="palette-grid" id="paletteGrid"></div>
-                        <div style="margin-top: 1rem; font-size: 0.7rem; color:#94a3b8;">
-                            <i class="fas fa-circle" style="color:#10b981;"></i> Answered &nbsp;
-                            <i class="fas fa-circle" style="color:#6366f1;"></i> Current
+                        <div style="margin-top: 1rem; font-size: 0.7rem; color:#b0b3c8;">
+                            <i class="fas fa-circle" style="color:#06ffa5;"></i> Answered &nbsp;
+                            <i class="fas fa-circle" style="color:#4361ee;"></i> Current &nbsp;
+                            <i class="fas fa-circle" style="color:#4a5568;"></i> Unanswered
                         </div>
                     </div>
                 </div>
@@ -1106,7 +1154,7 @@
         });
         
         document.getElementById('submitBtn')?.addEventListener('click', () => {
-            if (confirm("Are you sure you want to submit your test?")) {
+            if (confirm("Are you sure you want to submit your test? You cannot change answers after submission.")) {
                 submitTestAndSave();
             }
         });
@@ -1119,7 +1167,6 @@
     function renderResults() {
         const res = window.lastResult;
         if (!res) {
-            console.error("No results found");
             currentView = 'landing';
             renderApp();
             return;
@@ -1129,11 +1176,11 @@
         res.review.forEach((item, idx) => {
             reviewRows += `
                 <tr class="${item.status ? 'correct-row' : 'incorrect-row'}">
-                    <td>${idx + 1}</td>
-                    <td>${item.question}</td>
-                    <td><span class="badge ${item.status ? 'badge-success' : 'badge-warning'}">${item.userAnswer}</span></td>
-                    <td><span class="badge badge-success">${item.correct}</span></td>
-                    <td>${item.status ? '✓ Correct' : '✗ Incorrect'}</td>
+                    <td style="padding: 12px;">${idx + 1}</td>
+                    <td style="padding: 12px;">${item.question}</td>
+                    <td style="padding: 12px;"><span class="badge ${item.status ? 'badge-success' : 'badge-warning'}">${item.userAnswer}</span></td>
+                    <td style="padding: 12px;"><span class="badge badge-success">${item.correct}</span></td>
+                    <td style="padding: 12px;">${item.status ? '✓ Correct' : '✗ Incorrect'}</td>
                 </tr>
             `;
         });
@@ -1141,16 +1188,16 @@
         root.innerHTML = `
             <div class="glass-card" style="padding: clamp(1rem, 4vw, 2rem);">
                 <div style="text-align:center;">
-                    <i class="fas fa-chart-line" style="font-size: clamp(2rem, 6vw, 3rem); color: #818cf8;"></i>
+                    <i class="fas fa-chart-simple" style="font-size: clamp(2rem, 6vw, 3rem); color: #06ffa5;"></i>
                     <h1>Test Results</h1>
-                    <p style="color:#94a3b8;">${res.studentName} | ${res.examCode}</p>
+                    <p style="color:#b0b3c8;">${res.studentName} | ${res.examCode}</p>
                 </div>
                 <div class="score-card">
                     <div class="score-number">${res.score}/${res.total}</div>
-                    <div style="font-size: 1.1rem; margin-top: 0.5rem; color:#cbd5e1;">Percentage: ${res.percentage.toFixed(2)}%</div>
-                    <div style="font-size: 1.2rem; font-weight: 700; margin-top: 0.5rem; color: #10b981;">${res.grade}</div>
+                    <div style="font-size: 1.1rem; margin-top: 0.5rem;">Percentage: ${res.percentage.toFixed(2)}%</div>
+                    <div style="font-size: 1.2rem; font-weight: 700; margin-top: 0.5rem; color: ${res.gradeColor};">${res.grade}</div>
                 </div>
-                <h3 style="color:white; margin: 1.5rem 0 1rem 0;"><i class="fas fa-list-ul"></i> Detailed Review</h3>
+                <h3 style="color:white; margin: 1.5rem 0 1rem 0;"><i class="fas fa-list-check"></i> Question-wise Analysis</h3>
                 <div class="table-wrapper">
                     <table class="results-table">
                         <thead>
@@ -1160,7 +1207,7 @@
                     </table>
                 </div>
                 <div style="display: flex; gap: 12px; margin-top: 1.5rem; justify-content: center; flex-wrap: wrap;">
-                    <button id="downloadCSV" class="btn btn-primary"><i class="fas fa-download"></i> Download CSV Report</button>
+                    <button id="downloadCSV" class="btn btn-primary"><i class="fas fa-download"></i> Download Report</button>
                     <button id="newTestBtn" class="btn btn-secondary"><i class="fas fa-redo-alt"></i> Take New Test</button>
                 </div>
             </div>
@@ -1179,7 +1226,7 @@
             link.download = `${res.studentName}_${res.examCode}_results.csv`;
             link.click();
             URL.revokeObjectURL(link.href);
-            showNotification("Report downloaded!", "success");
+            showNotification("Report downloaded successfully!", "success");
         };
         
         document.getElementById('newTestBtn').onclick = () => {
@@ -1202,11 +1249,11 @@
                 <div style="background:rgba(0,0,0,0.3); border-radius:16px; padding:1rem; margin-bottom:0.8rem; border:1px solid var(--border);">
                     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                         <div>
-                            <strong style="color:white; font-size:1rem;">📌 ${code}</strong><br/>
-                            <small style="color:#94a3b8;">📄 ${exam.questions.length} questions | ⏱️ ${exam.timerMinutes} min</small><br/>
-                            <small style="color:#10b981;">📊 ${exam.totalAttempts || 0} attempts | Avg: ${(exam.averageScore || 0).toFixed(1)}%</small>
+                            <strong style="color:white; font-size:1rem;"><i class="fas fa-folder"></i> ${code}</strong><br/>
+                            <small style="color:#b0b3c8;">📄 ${exam.questions.length} questions | ⏱️ ${exam.timerMinutes} minutes</small><br/>
+                            <small style="color:#06ffa5;">📊 ${exam.totalAttempts || 0} attempts | Avg: ${(exam.averageScore || 0).toFixed(1)}%</small>
                         </div>
-                        ${code !== 'PROCTOR2024' ? `<button class="btn btn-danger" style="padding:6px 14px;" onclick="window.deleteExamWrapper('${code}')"><i class="fas fa-trash"></i> Delete</button>` : '<span class="badge badge-warning"><i class="fas fa-star"></i> Default</span>'}
+                        ${code !== 'EXAM2024' ? `<button class="btn btn-danger" style="padding:6px 14px; font-size:0.8rem;" onclick="window.deleteExamWrapper('${code}')"><i class="fas fa-trash"></i> Delete</button>` : '<span class="badge badge-warning"><i class="fas fa-star"></i> Default</span>'}
                     </div>
                 </div>
             `;
@@ -1218,25 +1265,25 @@
                 <tr style="border-bottom:1px solid var(--border);">
                     <td style="padding:10px;"><strong style="color:white;">${a.studentName}</strong></td>
                     <td style="padding:10px;"><span class="badge badge-warning">${a.examCode}</span></td>
-                    <td style="padding:10px; color:#94a3b8;">${new Date(a.timestamp).toLocaleDateString()}</td>
+                    <td style="padding:10px; color:#b0b3c8;">${a.formattedDate || new Date(a.timestamp).toLocaleDateString()}</td>
                     <td style="padding:10px; color:white;">${a.score}/${a.total}</td>
                     <td style="padding:10px; color:white;">${a.percentage.toFixed(1)}%</td>
-                    <td style="padding:10px; color:${a.percentage >= 60 ? '#10b981' : '#f59e0b'};">${a.grade.split(' ')[0]}</td>
+                    <td style="padding:10px; color:${a.percentage >= 60 ? '#06ffa5' : '#ffb700'};">${a.grade.split(' ')[0]}</td>
                 </tr>
             `;
         });
         
         root.innerHTML = `
             <div class="glass-card" style="padding: clamp(1rem, 4vw, 2rem);">
-                <h2 style="color:white;"><i class="fas fa-crown"></i> Admin Control Center</h2>
+                <h2 style="color:white;"><i class="fas fa-crown"></i> Administrator Dashboard</h2>
                 <div class="stats-grid">
-                    <div class="stat-card"><i class="fas fa-chart-line" style="font-size:2rem; color:#818cf8;"></i><h3 style="color:white; margin-top:8px;">${totalTests}</h3><p style="color:#94a3b8;">Total Tests</p></div>
-                    <div class="stat-card"><i class="fas fa-percent" style="font-size:2rem; color:#10b981;"></i><h3 style="color:white; margin-top:8px;">${avgScore.toFixed(1)}%</h3><p style="color:#94a3b8;">Average Score</p></div>
-                    <div class="stat-card"><i class="fas fa-trophy" style="font-size:2rem; color:#f59e0b;"></i><h3 style="color:white; margin-top:8px;">${passRate.toFixed(1)}%</h3><p style="color:#94a3b8;">Pass Rate</p></div>
+                    <div class="stat-card"><i class="fas fa-users" style="font-size:2rem; color:#4361ee;"></i><h3 style="color:white; margin-top:8px;">${totalTests}</h3><p>Total Tests</p></div>
+                    <div class="stat-card"><i class="fas fa-chart-line" style="font-size:2rem; color:#06ffa5;"></i><h3 style="color:white; margin-top:8px;">${avgScore.toFixed(1)}%</h3><p>Average Score</p></div>
+                    <div class="stat-card"><i class="fas fa-trophy" style="font-size:2rem; color:#ffb700;"></i><h3 style="color:white; margin-top:8px;">${passRate.toFixed(1)}%</h3><p>Pass Rate</p></div>
                 </div>
                 <div class="admin-grid">
                     <div>
-                        <h3 style="color:white;"><i class="fas fa-plus-circle"></i> Create New Exam</h3>
+                        <h3 style="color:white;"><i class="fas fa-plus-circle"></i> Create Examination</h3>
                         <div class="input-group"><label>Exam Code</label><input type="text" id="newExamCode" class="input-field" placeholder="e.g., FINAL2025"></div>
                         <div class="input-group"><label>Time Limit (minutes)</label><input type="number" id="newExamTimer" class="input-field" value="30"></div>
                         <div class="input-group"><label>Upload Questions (Excel/CSV)</label><input type="file" id="examQuestionsFile" class="input-field" accept=".xlsx,.csv"></div>
@@ -1244,20 +1291,20 @@
                         <button id="templateBtn" class="btn btn-secondary" style="width:100%; margin-top:10px;"><i class="fas fa-download"></i> Download Template</button>
                     </div>
                     <div>
-                        <h3 style="color:white;"><i class="fas fa-database"></i> Existing Exams (${Object.keys(exams).length})</h3>
-                        <div style="max-height:350px; overflow-y:auto;">${examListHtml || '<p style="color:#94a3b8;">No exams created yet.</p>'}</div>
+                        <h3 style="color:white;"><i class="fas fa-database"></i> Available Exams (${Object.keys(exams).length})</h3>
+                        <div style="max-height:350px; overflow-y:auto;">${examListHtml || '<p style="color:#b0b3c8;">No exams created yet. Create one above.</p>'}</div>
                     </div>
                 </div>
-                <h3 style="color:white; margin-top:1.5rem;"><i class="fas fa-history"></i> Recent Test Attempts</h3>
+                <h3 style="color:white; margin-top:1.5rem;"><i class="fas fa-history"></i> Recent Attempts</h3>
                 <div class="table-wrapper">
                     <table style="width:100%;">
-                        <thead><tr style="background:rgba(99,102,241,0.15);"><th style="color:white; padding:10px;">Student</th><th style="color:white;">Exam</th><th style="color:white;">Date</th><th style="color:white;">Score</th><th style="color:white;">%</th><th style="color:white;">Grade</th></tr></thead>
-                        <tbody>${attemptsHtml || '<tr><td colspan="6" style="text-align:center; padding:20px; color:#94a3b8;">No attempts yet</td></tr>'}</tbody>
+                        <thead><tr style="background:rgba(67,97,238,0.15);"><th style="color:white; padding:10px;">Student</th><th style="color:white;">Exam</th><th style="color:white;">Date</th><th style="color:white;">Score</th><th style="color:white;">%</th><th style="color:white;">Grade</th></tr></thead>
+                        <tbody>${attemptsHtml || '<tr><td colspan="6" style="text-align:center; padding:20px; color:#b0b3c8;">No test attempts recorded yet</td></tr>'}</tbody>
                     </table>
                 </div>
                 <div style="display:flex; gap:12px; margin-top:1.5rem; flex-wrap:wrap;">
                     <button id="exportBtn" class="btn btn-success"><i class="fas fa-file-excel"></i> Export All Results</button>
-                    <button id="resetBtn" class="btn btn-danger"><i class="fas fa-radar"></i> Reset Everything</button>
+                    <button id="resetBtn" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Reset System</button>
                     <button id="logoutBtn" class="btn btn-secondary"><i class="fas fa-sign-out-alt"></i> Logout</button>
                 </div>
             </div>
@@ -1269,7 +1316,9 @@
             const code = document.getElementById('newExamCode').value.trim().toUpperCase();
             const timer = parseInt(document.getElementById('newExamTimer').value);
             const file = document.getElementById('examQuestionsFile').files[0];
-            if (!code || !timer || !file) { showNotification("Fill all fields!", "warning"); return; }
+            if (!code) { showNotification("Please enter exam code!", "warning"); return; }
+            if (!timer || timer < 1) { showNotification("Please enter valid time limit!", "warning"); return; }
+            if (!file) { showNotification("Please select an Excel/CSV file!", "warning"); return; }
             uploadExcelToExam(file, code, timer, (s) => { if (s) renderAdmin(); });
         };
         document.getElementById('templateBtn').onclick = () => downloadTemplate();
@@ -1279,11 +1328,10 @@
     }
 
     // Tab switching detection
-    let warningCount = 0;
     document.addEventListener('visibilitychange', () => {
         if (currentView === 'test' && testSession && document.hidden) {
             warningCount++;
-            showNotification(`⚠️ Tab switching detected (${warningCount})!`, "warning");
+            showNotification(`⚠️ Tab switching detected (${warningCount})! This incident has been logged.`, "warning");
         }
     });
     
