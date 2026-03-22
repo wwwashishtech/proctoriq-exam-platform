@@ -1,6 +1,6 @@
 # ProctorIQ - Enterprise Assessment Suite
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-green.svg)](https://YOUR_USERNAME.github.io/proctoriq-exam-platform/)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-green.svg)](https://proctoriq.netlify.app/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ## 🎯 Professional Online Examination Platform with Advanced Proctoring
